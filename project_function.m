@@ -32,7 +32,11 @@ Substrate_data = readmatrix('
 time = Substrate_data(:,1);
 
 %Enzyme A orgnaization
-
+initial_375A = Substrate_data(:,2);
+initial_75A = Substrate_data(:,3);
+initial_15A = Substrate_data(:,4);
+initial_30A = Substrate_data(:,5);
+initial_65A = Substrate_data(:,6);
 
 %% ____________________
 %% CALCULATIONS

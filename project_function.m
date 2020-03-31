@@ -148,6 +148,144 @@ dup_2000E = Substrate_data(:,101); % Duplicate Test of Enzyme E with initial con
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
+initial_375A = Substrate_data(:,2); % Initial Test of Enzyme A with initial concentration of 3.75 (uM)
+initial_75A = Substrate_data(:,3); % Initial Test of Enzyme A with initial concentration of 7.5 (uM)
+initial_15A = Substrate_data(:,4); % Initial Test of Enzyme A with initial concentration of 15 (uM)
+initial_30A = Substrate_data(:,5); % Initial Test of Enzyme A with initial concentration of 30 (uM)
+initial_65A = Substrate_data(:,6); % Initial Test of Enzyme A with initial concentration of 65 (uM)
+initial_125A = Substrate_data(:,7); % Initial Test of Enzyme A with initial concentration of 125 (uM)
+initial_250A = Substrate_data(:,8); % Initial Test of Enzyme A with initial concentration of 250 (uM)
+initial_500A = Substrate_data(:,9); % Initial Test of Enzyme A with initial concentration of 500 (uM)
+initial_1000A = Substrate_data(:,10); % Initial Test of Enzyme A with initial concentration of 1000 (uM)
+initial_2000A = Substrate_data(:,11);
+
+figure(1); % initial tests of enzyme A
+
+subplot(2, 5, 1);
+plot(time, initial_375A);
+
+subplot(2, 5, 2);
+plot(time, initial_75A);
+
+subplot(2, 5, 3);
+plot(time, initial_15A);
+
+subplot(2, 5, 4);
+plot(time, initial_30A);
+
+subplot(2, 5, 5);
+plot(time, initial_65A);
+
+subplot(2, 5, 6);
+plot(time, initial_125A);
+
+subplot(2, 5, 7);
+plot(time, initial_250A);
+
+subplot(2, 5, 8);
+plot(time, initial_500A);
+
+subplot(2, 5, 9);
+plot(time, initial_1000A);
+
+subplot(2, 5, 10);
+plot(time, initial_1000A);
+
+figure(2); % duplicate tests of enzyme A
+
+subplot(2, 5, 1);
+plot(time, dup_375A);
+
+subplot(2, 5, 2);
+plot(time, dup_75A);
+
+subplot(2, 5, 3);
+plot(time, dup_15A);
+
+subplot(2, 5, 4);
+plot(time, dup_30A);
+
+subplot(2, 5, 5);
+plot(time, dup_65A);
+
+subplot(2, 5, 6);
+plot(time, dup_125A);
+
+subplot(2, 5, 7);
+plot(time, dup_250A);
+
+subplot(2, 5, 8);
+plot(time, dup_500A);
+
+subplot(2, 5, 9);
+plot(time, dup_1000A);
+
+subplot(2, 5, 10);
+plot(time, dup_1000A);
+
+figure(3); % inital tests of enzyme B
+
+subplot(2, 5, 1);
+plot(time, initial_375B);
+
+subplot(2, 5, 2);
+plot(time, initial_75B);
+
+subplot(2, 5, 3);
+plot(time, initial_15B);
+
+subplot(2, 5, 4);
+plot(time, initial_30B);
+
+subplot(2, 5, 5);
+plot(time, initial_65B);
+
+subplot(2, 5, 6);
+plot(time, initial_125B);
+
+subplot(2, 5, 7);
+plot(time, initial_250B);
+
+subplot(2, 5, 8);
+plot(time, initial_500B);
+
+subplot(2, 5, 9);
+plot(time, initial_1000B);
+
+subplot(2, 5, 10);
+plot(time, initial_1000B);
+
+figure(4); % duplicate tests of enzyme B
+
+subplot(2, 5, 1);
+plot(time, dup_375B);
+
+subplot(2, 5, 2);
+plot(time, dup_75B);
+
+subplot(2, 5, 3);
+plot(time, dup_15B);
+
+subplot(2, 5, 4);
+plot(time, dup_30B);
+
+subplot(2, 5, 5);
+plot(time, dup_65B);
+
+subplot(2, 5, 6);
+plot(time, dup_125B);
+
+subplot(2, 5, 7);
+plot(time, dup_250B);
+
+subplot(2, 5, 8);
+plot(time, dup_500B);
+
+subplot(2, 5, 9);
+plot(time, dup_1000B);
+
+subplot(2, 5, 10);
+plot(time, dup_1000B);
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT

@@ -27,6 +27,12 @@ did you complete the assignment information? delete this line if yes
 %% ____________________
 %% INITIALIZATION
 
+%Importing the data
+Substrate_data = readmatrix('
+time = Substrate_data(:,1);
+
+%Enzyme A orgnaization
+
 
 %% ____________________
 %% CALCULATIONS

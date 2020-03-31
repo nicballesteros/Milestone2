@@ -1,27 +1,27 @@
-replace this text with your function definition line
+function outputs = project_function(inputs)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ENGR 132 
-% Program Description 
-replace this text with your program decription as a comment
+% ENGR 132
+% Program Description
+% This program runs analysis
 %
 % Function Call
-replace this text with a comment that states the function call
+%   project_function(inputs);
 %
 % Input Arguments
-replace this text with a commented list of the input arguments
+%   inputs -
 %
 % Output Arguments
-replace this text with a commented list of the output arguments
+%   outputs -
 %
 % Assignment Information
-%   Assignment:     M##, Problem #
-%   Team member:    Name, login@purdue.edu [repeat for each person]
-%   Team ID:        ###-##
+%   Assignment:     M02, Problem #
+%   Team member:    Nic Ballesteros, nballes@purdue.edu
+%   Team member:    Annabelle Johnson, john245@purdue.edu
+%   Team member:    Alan Camacho, @purdue.edu
+%   Team ID:        005-19
 %   Academic Integrity:
-%     [] We worked with one or more peers but our collaboration
+%     [x] We worked with one or more peers but our collaboration
 %        maintained academic integrity.
-%     Peers we worked with: Name, login@purdue [repeat for each]
-did you complete the assignment information? delete this line if yes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ____________________
@@ -159,6 +159,3 @@ dup_2000E = Substrate_data(:,101); % Duplicate Test of Enzyme E with initial con
 % source, either modified or unmodified. Neither have we provided
 % access to my code to another. The program we are submitting
 % is our own original work.
-
-
-

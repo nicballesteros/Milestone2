@@ -1,4 +1,4 @@
-function outputs = project_function(inputs)
+function [Km,Vmax] = project_function(time,I375,I75,I15,I30,I65,I125,I250,I500,I1000,I2000,D375,D75,D15,D30,D65,D125,D250,D500,D1000,D2000)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description

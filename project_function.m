@@ -1,27 +1,26 @@
-replace this text with your function definition line
+function project_function(Enzyme)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description 
 replace this text with your program decription as a comment
 %
 % Function Call
-replace this text with a comment that states the function call
+%function project_function(Enzyme)
 %
 % Input Arguments
-replace this text with a commented list of the input arguments
+% The user inputs which enzyme they want to view
 %
 % Output Arguments
-replace this text with a commented list of the output arguments
 %
 % Assignment Information
-%   Assignment:     M##, Problem #
-%   Team member:    Name, login@purdue.edu [repeat for each person]
-%   Team ID:        ###-##
-%   Academic Integrity:
-%     [] We worked with one or more peers but our collaboration
-%        maintained academic integrity.
+%   Assignment:     M02, Problem 1
+%   Team member:    Annabelle Johnson, john2445@purdue.edu; Nic
+%   Ballesteros, nballes@purdue.edu; Alan Camacho, camachop@purdue.edu
+%   Team ID:        005-19
+%   Academic InteJgrity:
+%     [Annabelle Johnson, Nic Ballesteros, Alan Camacho] We worked with
+%     one or more peers but our collaboration maintained academic integrity.
 %     Peers we worked with: Name, login@purdue [repeat for each]
-did you complete the assignment information? delete this line if yes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ____________________
@@ -144,14 +143,62 @@ dup_2000E = Substrate_data(:,101); % Duplicate Test of Enzyme E with initial con
 %% ____________________
 %% CALCULATIONS
 
+%Calculations for V0
+if Enzyme == A
+elseif Enzyme == B
+elseif Enzyme == C
+elseif Enzyme == D
+elseif Enzyme == E
+else 
+    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
+end
+
+%Calculations for Vmax
+if Enzyme == A
+elseif Enzyme == B
+elseif Enzyme == C
+elseif Enzyme == D
+elseif Enzyme == E
+else 
+    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
+end
+
+%Calculations for Km
+if Enzyme == A
+elseif Enzyme == B
+elseif Enzyme == C
+elseif Enzyme == D
+elseif Enzyme == E
+else 
+    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
+end
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
+%Plotting and Displaying the graphs for each enzyme
+if Enzyme == A
+elseif Enzyme == B
+elseif Enzyme == C
+elseif Enzyme == D
+elseif Enzyme == E
+else 
+    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
+end
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT
 
+%Displaying the calculated values of each enzyme to the display window
+if Enzyme == A
+elseif Enzyme == B
+elseif Enzyme == C
+elseif Enzyme == D
+elseif Enzyme == E
+else 
+    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
+end
+end
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

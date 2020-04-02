@@ -1,27 +1,26 @@
-replace this text with your function definition line
+function project_function(Enzyme)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description 
 replace this text with your program decription as a comment
 %
 % Function Call
-replace this text with a comment that states the function call
+%function project_function(Enzyme)
 %
 % Input Arguments
-replace this text with a commented list of the input arguments
+% The user inputs which enzyme they want to view
 %
 % Output Arguments
-replace this text with a commented list of the output arguments
 %
 % Assignment Information
-%   Assignment:     M##, Problem #
-%   Team member:    Name, login@purdue.edu [repeat for each person]
-%   Team ID:        ###-##
-%   Academic Integrity:
-%     [] We worked with one or more peers but our collaboration
-%        maintained academic integrity.
+%   Assignment:     M02, Problem 1
+%   Team member:    Annabelle Johnson, john2445@purdue.edu; Nic
+%   Ballesteros, nballes@purdue.edu; Alan Camacho, camachop@purdue.edu
+%   Team ID:        005-19
+%   Academic InteJgrity:
+%     [Annabelle Johnson, Nic Ballesteros, Alan Camacho] We worked with
+%     one or more peers but our collaboration maintained academic integrity.
 %     Peers we worked with: Name, login@purdue [repeat for each]
-did you complete the assignment information? delete this line if yes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ____________________
@@ -98,38 +97,99 @@ dup_1000C = Substrate_data(:,60); % Duplicate Test of Enzyme C with initial conc
 dup_2000C = Substrate_data(:,61); % Duplicate Test of Enzyme C with initial concentration of 2000 (uM)
 
 %Enzyme D orgnaization
-initial_375D = Substrate_data(:,42); % Initial Test of Enzyme D with initial concentration of 3.75 (uM)
-initial_75D = Substrate_data(:,43); % Initial Test of Enzyme D with initial concentration of 7.5 (uM)
-initial_15D = Substrate_data(:,44); % Initial Test of Enzyme D with initial concentration of 15 (uM)
-initial_30D = Substrate_data(:,45); % Initial Test of Enzyme D with initial concentration of 30 (uM)
-initial_65D = Substrate_data(:,46); % Initial Test of Enzyme D with initial concentration of 65 (uM)
-initial_125D = Substrate_data(:,47); % Initial Test of Enzyme D with initial concentration of 125 (uM)
-initial_250D = Substrate_data(:,48); % Initial Test of Enzyme D with initial concentration of 250 (uM)
-initial_500D = Substrate_data(:,49); % Initial Test of Enzyme D with initial concentration of 500 (uM)
-initial_1000D = Substrate_data(:,50); % Initial Test of Enzyme D with initial concentration of 1000 (uM)
-initial_2000D = Substrate_data(:,51); % Initial Test of Enzyme D with initial concentration of 2000 (uM)
-dup_375D = Substrate_data(:,52); % Duplicate Test of Enzyme D with initial concentration of 3.75 (uM)
-dup_75D = Substrate_data(:,53); % Duplicate Test of Enzyme D with initial concentration of 7.5 (uM)
-dup_15D = Substrate_data(:,54); % Duplicate Test of Enzyme D with initial concentration of 15 (uM)
-dup_30D = Substrate_data(:,55); % Duplicate Test of Enzyme D with initial concentration of 30 (uM)
-dup_65D = Substrate_data(:,56); % Duplicate Test of Enzyme D with initial concentration of 60 (uM)
-dup_125D = Substrate_data(:,57); % Duplicate Test of Enzyme D with initial concentration of 125 (uM)
-dup_250D = Substrate_data(:,58); % Duplicate Test of Enzyme D with initial concentration of 250 (uM)
-dup_500D = Substrate_data(:,59); % Duplicate Test of Enzyme D with initial concentration of 500 (uM)
-dup_1000D = Substrate_data(:,60); % Duplicate Test of Enzyme D with initial concentration of 1000 (uM)
-dup_2000D = Substrate_data(:,61); % Duplicate Test of Enzyme D with initial concentration of 2000 (uM)
+initial_375D = Substrate_data(:,62); % Initial Test of Enzyme D with initial concentration of 3.75 (uM)
+initial_75D = Substrate_data(:,63); % Initial Test of Enzyme D with initial concentration of 7.5 (uM)
+initial_15D = Substrate_data(:,64); % Initial Test of Enzyme D with initial concentration of 15 (uM)
+initial_30D = Substrate_data(:,65); % Initial Test of Enzyme D with initial concentration of 30 (uM)
+initial_65D = Substrate_data(:,66); % Initial Test of Enzyme D with initial concentration of 65 (uM)
+initial_125D = Substrate_data(:,67); % Initial Test of Enzyme D with initial concentration of 125 (uM)
+initial_250D = Substrate_data(:,68); % Initial Test of Enzyme D with initial concentration of 250 (uM)
+initial_500D = Substrate_data(:,69); % Initial Test of Enzyme D with initial concentration of 500 (uM)
+initial_1000D = Substrate_data(:,70); % Initial Test of Enzyme D with initial concentration of 1000 (uM)
+initial_2000D = Substrate_data(:,71); % Initial Test of Enzyme D with initial concentration of 2000 (uM)
+dup_375D = Substrate_data(:,72); % Duplicate Test of Enzyme D with initial concentration of 3.75 (uM)
+dup_75D = Substrate_data(:,73); % Duplicate Test of Enzyme D with initial concentration of 7.5 (uM)
+dup_15D = Substrate_data(:,74); % Duplicate Test of Enzyme D with initial concentration of 15 (uM)
+dup_30D = Substrate_data(:,75); % Duplicate Test of Enzyme D with initial concentration of 30 (uM)
+dup_65D = Substrate_data(:,76); % Duplicate Test of Enzyme D with initial concentration of 60 (uM)
+dup_125D = Substrate_data(:,77); % Duplicate Test of Enzyme D with initial concentration of 125 (uM)
+dup_250D = Substrate_data(:,78); % Duplicate Test of Enzyme D with initial concentration of 250 (uM)
+dup_500D = Substrate_data(:,79); % Duplicate Test of Enzyme D with initial concentration of 500 (uM)
+dup_1000D = Substrate_data(:,80); % Duplicate Test of Enzyme D with initial concentration of 1000 (uM)
+dup_2000D = Substrate_data(:,81); % Duplicate Test of Enzyme D with initial concentration of 2000 (uM)
+
+%Enzyme E orgnaization
+initial_375E = Substrate_data(:,82); % Initial Test of Enzyme E with initial concentration of 3.75 (uM)
+initial_75E = Substrate_data(:,83); % Initial Test of Enzyme E with initial concentration of 7.5 (uM)
+initial_15E = Substrate_data(:,84); % Initial Test of Enzyme E with initial concentration of 15 (uM)
+initial_30E = Substrate_data(:,85); % Initial Test of Enzyme E with initial concentration of 30 (uM)
+initial_65E = Substrate_data(:,86); % Initial Test of Enzyme E with initial concentration of 65 (uM)
+initial_125E = Substrate_data(:,87); % Initial Test of Enzyme E with initial concentration of 125 (uM)
+initial_250E = Substrate_data(:,88); % Initial Test of Enzyme E with initial concentration of 250 (uM)
+initial_500E = Substrate_data(:,89); % Initial Test of Enzyme E with initial concentration of 500 (uM)
+initial_1000E = Substrate_data(:,90); % Initial Test of Enzyme E with initial concentration of 1000 (uM)
+initial_2000E = Substrate_data(:,91); % Initial Test of Enzyme E with initial concentration of 2000 (uM)
+dup_375E = Substrate_data(:,92); % Duplicate Test of Enzyme E with initial concentration of 3.75 (uM)
+dup_75E = Substrate_data(:,93); % Duplicate Test of Enzyme E with initial concentration of 7.5 (uM)
+dup_15E = Substrate_data(:,94); % Duplicate Test of Enzyme E with initial concentration of 15 (uM)
+dup_30E = Substrate_data(:,95); % Duplicate Test of Enzyme E with initial concentration of 30 (uM)
+dup_65E = Substrate_data(:,96); % Duplicate Test of Enzyme E with initial concentration of 60 (uM)
+dup_125E = Substrate_data(:,97); % Duplicate Test of Enzyme E with initial concentration of 125 (uM)
+dup_250E = Substrate_data(:,98); % Duplicate Test of Enzyme E with initial concentration of 250 (uM)
+dup_500E = Substrate_data(:,99); % Duplicate Test of Enzyme E with initial concentration of 500 (uM)
+dup_1000E = Substrate_data(:,100); % Duplicate Test of Enzyme E with initial concentration of 1000 (uM)
+dup_2000E = Substrate_data(:,101); % Duplicate Test of Enzyme E with initial concentration of 2000 (uM)
 
 %% ____________________
 %% CALCULATIONS
 
+%Calculations for V0
+if Enzyme == A
+elseif Enzyme == B
+elseif Enzyme == C
+elseif Enzyme == D
+elseif Enzyme == E
+else 
+    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
+end
+
+%Calculations for Vmax
+if Enzyme == A
+elseif Enzyme == B
+elseif Enzyme == C
+elseif Enzyme == D
+elseif Enzyme == E
+else 
+    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
+end
+
+%Calculations for Km
+if Enzyme == A
+elseif Enzyme == B
+elseif Enzyme == C
+elseif Enzyme == D
+elseif Enzyme == E
+else 
+    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
+end
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
+%Plotting and Displaying the graphs for each enzyme
+if Enzyme == A
+elseif Enzyme == B
+elseif Enzyme == C
+elseif Enzyme == D
+elseif Enzyme == E
+else 
+    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
+end
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT
 
+%Displaying the calculated values of
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

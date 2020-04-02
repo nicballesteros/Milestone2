@@ -1,4 +1,4 @@
-function [Km,Vmax] = project_function(time,I375,I75,I15,I30,I65,I125,I250,I500,I1000,I2000,D375,D75,D15,D30,D65,D125,D250,D500,D1000,D2000)
+function [Km,Vmax] = project_function(time,Initial_375,Initial_75,Initial_15,Initial_30,Initial_65,Initial_125,Initial_250,Initial_500,Initial_1000,Initial_2000,Duplicate_375,Duplicate_75,Duplicate_15,Duplicate_30,Duplicate_65,Duplicate_125,Duplicate_250,Duplicate_500,Duplicate_1000,Duplicate_2000)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description
@@ -6,13 +6,59 @@ function [Km,Vmax] = project_function(time,I375,I75,I15,I30,I65,I125,I250,I500,I
 %
 % Function Call
 %
+%function [Km,Vmax] = project_function(time,Initial_375,Initial_75,Initial_15,Initial_30,Initial_65,Initial_125,Initial_250,Initial_500,Initial_1000,Initial_2000,Duplicate_375,Duplicate_75,Duplicate_15,Duplicate_30,Duplicate_65,Duplicate_125,Duplicate_250,Duplicate_500,Duplicate_1000,Duplicate_2000)
+%
 % Input Arguments
 %
+% time: Input the time column, s
+% Initial_375: Input the substrate concentration column for the initial substrate
+% concentration of 3.75, uM
+% Initial_75: Input the substrate concentration column for the initial substrate
+% concentration of 7.5, uM
+% Initial_15: Input the substrate concentration column for the initial substrate
+% concentration of 15, uM
+% Initial_30: Input the substrate concentration column for the initial substrate
+% concentration of 30, uM
+% Initial_65: Input the substrate concentration column for the initial substrate
+% concentration of 65, uM
+% Initial_125: Input the substrate concentration column for the initial substrate
+% concentration of 125, uM
+% Initial_250: Input the substrate concentration column for the initial substrate
+% concentration of 250, uM
+% Initial_500: Input the substrate concentration column for the initial substrate
+% concentration of 500, uM
+% Initial_1000: Input the substrate concentration column for the initial substrate
+% concentration of 1000, uM
+% Initial_2000: Input the substrate concentration column for the initial substrate
+% concentration of 2000, uM
+% Duplicate_375: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 3.75, uM
+% Duplicate_75: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 7.5, uM
+% Duplicate_15: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 15, uM
+% Duplicate_30: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 30, uM
+% Duplicate_65: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 65, uM
+% Duplicate_125: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 125, uM
+% Duplicate_250: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 250, uM
+% Duplicate_500: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 500, uM
+% Duplicate_1000: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 1000, uM
+% Duplicate_2000: Input the substrate concentration column for the duplicate test
+% substrate initial concentration of 2000, uM
 %
 % Output Arguments
 %
+% Km: Outputs the calculated Km value for the enzyme
+% Vmax: Outputs the calculated Vmax value for the enzyme
+%
 % Assignment Information
-%   Assignment:     M02, Problem #
+%   Assignment:     M02, Problem 
 %   Team member:    Nic Ballesteros, nballes@purdue.edu
 %   Team member:    Annabelle Johnson, john245@purdue.edu
 %   Team member:    Alan Camacho, @purdue.edu

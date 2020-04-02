@@ -1,39 +1,15 @@
-<<<<<<< HEAD
-function project_function(Enzyme)
-=======
 function outputs = project_function(inputs)
->>>>>>> master
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description
 % This program runs analysis
 %
 % Function Call
-<<<<<<< HEAD
-%function project_function(Enzyme)
 %
 % Input Arguments
-% The user inputs which enzyme they want to view
+%
 %
 % Output Arguments
-%
-% Assignment Information
-%   Assignment:     M02, Problem 1
-%   Team member:    Annabelle Johnson, john2445@purdue.edu; Nic
-%   Ballesteros, nballes@purdue.edu; Alan Camacho, camachop@purdue.edu
-%   Team ID:        005-19
-%   Academic InteJgrity:
-%     [Annabelle Johnson, Nic Ballesteros, Alan Camacho] We worked with
-%     one or more peers but our collaboration maintained academic integrity.
-%     Peers we worked with: Name, login@purdue [repeat for each]
-=======
-%   project_function(inputs);
-%
-% Input Arguments
-%   inputs -
-%
-% Output Arguments
-%   outputs -
 %
 % Assignment Information
 %   Assignment:     M02, Problem #
@@ -44,7 +20,6 @@ function outputs = project_function(inputs)
 %   Academic Integrity:
 %     [x] We worked with one or more peers but our collaboration
 %        maintained academic integrity.
->>>>>>> master
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ____________________
@@ -167,50 +142,10 @@ dup_2000E = Substrate_data(:,101); % Duplicate Test of Enzyme E with initial con
 %% ____________________
 %% CALCULATIONS
 
-%Calculations for V0
-if Enzyme == A
-elseif Enzyme == B
-elseif Enzyme == C
-elseif Enzyme == D
-elseif Enzyme == E
-else 
-    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
-end
-
-%Calculations for Vmax
-if Enzyme == A
-elseif Enzyme == B
-elseif Enzyme == C
-elseif Enzyme == D
-elseif Enzyme == E
-else 
-    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
-end
-
-%Calculations for Km
-if Enzyme == A
-elseif Enzyme == B
-elseif Enzyme == C
-elseif Enzyme == D
-elseif Enzyme == E
-else 
-    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
-end
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
-<<<<<<< HEAD
-%Plotting and Displaying the graphs for each enzyme
-if Enzyme == A
-elseif Enzyme == B
-elseif Enzyme == C
-elseif Enzyme == D
-elseif Enzyme == E
-else 
-    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
-end
-=======
 initial_375A = Substrate_data(:,2); % Initial Test of Enzyme A with initial concentration of 3.75 (uM)
 initial_75A = Substrate_data(:,3); % Initial Test of Enzyme A with initial concentration of 7.5 (uM)
 initial_15A = Substrate_data(:,4); % Initial Test of Enzyme A with initial concentration of 15 (uM)
@@ -349,21 +284,10 @@ plot(time, dup_1000B);
 
 subplot(2, 5, 10);
 plot(time, dup_1000B);
->>>>>>> master
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT
 
-%Displaying the calculated values of each enzyme to the display window
-if Enzyme == A
-elseif Enzyme == B
-elseif Enzyme == C
-elseif Enzyme == D
-elseif Enzyme == E
-else 
-    fprintf(2,'Please insert A, B, C, D, or E for your enzyme')
-end
-end
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

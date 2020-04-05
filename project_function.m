@@ -11,17 +11,18 @@ function [Km,Vmax] = project_function(time, enzymeData);
 %
 % Input Arguments
 %
-% time: Input the time column, s
-% enzymeData: Input the substrate concentration column for the initial substrate
-% concentration of 3.75, uM
+%   time: the time variable for each given data set.
+%   enzymeData: First row is the inital concentrations of the substrates for
+% each given test. The rest of the rows are the data points for each test; each
+% test in a serparate column.
 %
 % Output Arguments
 %
-% Km: Outputs the calculated Km value for the enzyme
-% Vmax: Outputs the calculated Vmax value for the enzyme
+% Km: Outputs the estimated Km value for the enzyme
+% Vmax: Outputs the estimated Vmax value for the enzyme
 %
 % Assignment Information
-%   Assignment:     M02, Problem
+%   Assignment:     M02, Problem 1
 %   Team member:    Nic Ballesteros, nballes@purdue.edu
 %   Team member:    Annabelle Johnson, john245@purdue.edu
 %   Team member:    Alan Camacho, @purdue.edu
@@ -34,19 +35,35 @@ function [Km,Vmax] = project_function(time, enzymeData);
 %% ____________________
 %% INITIALIZATION
 
+concentation = zeros(20, 1);
+dataSetSize = size(time);
+dataSetSize = dataSetSize(1);
+testData = zeros(dataSetSize, 20);
+
+for i = 1:20
+  testData(:, i) = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
+  concentation(i) = enzymeData(1, i);
+end;
+
+disp(testData);
+
 %slice up the enzyme data
-test1 = enzymeData(:, 1);
-test2 = enzymeData(:, 2);
-test3 = enzymeData(:, 3);
-test4 = enzymeData(:, 4);
-test5 = enzymeData(:, 5);
-test6 = enzymeData(:, 6);
-test7 = enzymeData(:, 7);
-test8 = enzymeData(:, 8);
-test9 = enzymeData(:, 9);
-test10 = enzymeData(:, 10);
+
+% test1 = enzymeData(2:end, 1);
+% test2 = enzymeData(2:end, 2);
+% test3 = enzymeData(2:end, 3);
+% test4 = enzymeData(2:end, 4);
+% test5 = enzymeData(2:end, 5);
+% test6 = enzymeData(2:end, 6);
+% test7 = enzymeData(2:end, 7);
+% test8 = enzymeData(2:end, 8);
+% test9 = enzymeData(2:end, 9);
+% test10 = enzymeData(2:end, 10);
 
 v0 = zeros(20, 1);
+
+
+
 y = enzymeData;
 x = time;
 
@@ -54,9 +71,8 @@ x = time;
 %% CALCULATIONS
 
 for i = 1:20
-  v0(i) = (enzymeData(2, i) - enzymeData(1, i)) / (time(2) - time(1));
+  v0(i) = (testData(2, i) - testData(1, i)) / (time(2) - time(1)); %find the inital slope of each one
 end;
-
 
 %implementing Hanes-Woolf Linearization
 

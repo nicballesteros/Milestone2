@@ -75,10 +75,11 @@ for i = 1:10
   yline = mean(test(i).dupData);
   xyline = mean(test(i).dupData .* test(i).dupTime);
 
-  a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).time .^ 2));
+  a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).dupTime .^ 2));
   b = yline - a * xline;
 
   test(i).coeffs(2) = [a b];
+end;
 
 for i = 1:10
   %find the inital slope of each test

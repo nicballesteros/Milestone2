@@ -40,6 +40,9 @@ x = time;
 
 %% ____________________
 %% CALCULATIONS
+
+v0 = (substrate_data(2) - substrate_data(1)) / (time(2) - time(1))
+
 %implementing Hanes-Woolf Linearization
 
 Y = y / v0;

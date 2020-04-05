@@ -41,7 +41,7 @@ x = time;
 %% ____________________
 %% CALCULATIONS
 
-v0 = (substrate_data(4) - substrate_data(3)) / (time(4) - time(3))
+v0 = (substrate_data(4) - substrate_data(3)) / (time(4) - time(3));
 
 %implementing Hanes-Woolf Linearization
 
@@ -49,12 +49,21 @@ Y = y / v0;
 
 X = substrate_data;
 figure(1);
-plot(X,Y);
+plot(X,Y, 'or');
+hold on;
 
+Xline = mean(X);
+Yline = mean(Y);
+XYline = mean(X .* Y);
+
+a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
+b = Yline - a * Xline;
+
+plot(time, a .* time + b, '--b');
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 figure(2);
-plot(time, substrate_data);
+plot(time, substrate_data, '+k');
 
 
 %% ____________________

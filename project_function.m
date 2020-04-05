@@ -97,11 +97,10 @@ end;
 for i = 1:10
   disp(test(i).coeffs);
 end;
+
 %implementing Hanes-Woolf Linearization
 
-disp(mmData);
-
-plot(mmData(:,1), mmData(:, 2));
+plot(mmData(:,1), mmData(:, 2), 'ko');
 
 % Y = y / v0;
 %

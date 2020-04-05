@@ -35,16 +35,23 @@ function [Km,Vmax] = project_function(time, substrate_data);
 %% INITIALIZATION
 
 v0 = 0;
-
+y = substrate_data;
+x = time;
 
 %% ____________________
 %% CALCULATIONS
 %implementing Hanes-Woolf Linearization
 
+Y = y / v0;
+
+X = substate_data;
+figure(1);
+plot(X,Y);
+
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
-
-plot(time, substate_data);
+figure(2);
+plot(time, substrate_data);
 
 
 %% ____________________

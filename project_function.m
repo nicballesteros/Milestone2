@@ -69,7 +69,7 @@ for i = 1:10
   a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).time .^ 2));
   b = yline - a * xline;
 
-  test(i).coeffs(1) = [a b];
+  test(i).coeffs(1, 1:2) = [a b];
 
   xline = mean(test(i).dupTime);
   yline = mean(test(i).dupData);
@@ -78,7 +78,7 @@ for i = 1:10
   a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).dupTime .^ 2));
   b = yline - a * xline;
 
-  test(i).coeffs(2) = [a b];
+  test(i).coeffs(2, 1:2) = [a b];
 end;
 
 for i = 1:10

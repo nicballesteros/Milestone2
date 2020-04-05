@@ -59,6 +59,8 @@ XYline = mean(X .* Y);
 a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
 b = Yline - a * Xline;
 
+fx = time * a + b
+
 plot(time, a .* time + b, 'b-');
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS

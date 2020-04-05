@@ -35,17 +35,13 @@ function [Km,Vmax] = project_function(time, enzymeData);
 %% ____________________
 %% INITIALIZATION
 
-concentation = zeros(20, 1);
-dataSetSize = size(time);
-dataSetSize = dataSetSize(1);
-testData = zeros(dataSetSize, 20);
-
-for i = 1:20
-  testData(:, i) = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
-  concentation(i) = enzymeData(1, i);
+for i = 1:10
+  test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
+  test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
+  test(i).concentation = enzymeData(1, i);
 end;
 
-disp(testData);
+size(test(1).data)
 
 %slice up the enzyme data
 
@@ -61,8 +57,6 @@ disp(testData);
 % test10 = enzymeData(2:end, 10);
 
 v0 = zeros(20, 1);
-
-
 
 y = enzymeData;
 x = time;

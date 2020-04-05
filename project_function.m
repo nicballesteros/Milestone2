@@ -44,7 +44,7 @@ x = time;
 
 Y = y / v0;
 
-X = substate_data;
+X = substrate_data;
 figure(1);
 plot(X,Y);
 

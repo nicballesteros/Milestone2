@@ -75,7 +75,7 @@ end;
 
 %implementing Hanes-Woolf Linearization
 
-plot(v0(:,1), v0(:, 2));
+plot(mmData(:,1), mmData(:, 2));
 
 % Y = y / v0;
 %

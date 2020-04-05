@@ -61,7 +61,7 @@ b = Yline - a * Xline;
 
 fx = time * a + b
 
-plot(time, a .* time + b, 'b-');
+plot(time, fx, 'b-');
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 figure(2);

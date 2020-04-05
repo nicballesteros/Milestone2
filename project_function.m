@@ -99,31 +99,31 @@ for i = 1:10
 end;
 
 %implementing Hanes-Woolf Linearization
-
+figure(1);
 plot(mmData(:,1), mmData(:, 2), 'ko');
 
-% Y = y / v0;
-%
-% X = enzymeData
-% figure(1);
-% plot(X,Y, 'ro');
-% hold on;
-%
-% Xline = mean(X)
-% Yline = mean(Y)
-% XYline = mean(X .* Y)
-%
-% a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2))
-% b = Yline - a * Xline
-%
-% fx = X * a + b;
-%
-% plot(X, fx, 'b-');
-%
-% Vmax = 1 / a
-% Km = b / a
-%
-% mme = (Vmax * enzymeData) / (Km + enzymeData);%Michaelis-Menten Equation
+Y = mmData(:, 1) ./ mmData(:, 2);
+
+X = mmData(:, 1);
+
+figure(2);
+plot(X,Y, 'ro');
+
+Xline = mean(X)
+Yline = mean(Y)
+XYline = mean(X .* Y)
+
+a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2))
+b = Yline - a * Xline
+
+fx = X * a + b;
+
+plot(X, fx, 'b-');
+
+Vmax = 1 / a
+Km = b / a
+
+mme = (Vmax * enzymeData) / (Km + enzymeData);%Michaelis-Menten Equation
 
 
 %% ____________________

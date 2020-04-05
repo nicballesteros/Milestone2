@@ -44,11 +44,11 @@ function [Km,Vmax] = project_function(time, enzymeData);
 %     test(test#).concentation;
 
 for i = 1:10
-  test(i).data = smoothdata(rmmissing(enzymeData(2:end, i))); %get all not NaN values in each col for each test
+  test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
   test(i).dataSize = size(test(i).data);
   test(i).time = time(1:test(i).dataSize(1));
   %store the duplicate data
-  test(i).dupData = smoothdata(rmmissing(enzymeData(2:end, i + 10))); %get all not NaN values in each col for each duplicate test
+  test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
   test(i).dupDataSize = size(test(i).dupData);
   test(i).dupTime = time(1:test(i).dupDataSize(1));
   %store the concentation
@@ -59,6 +59,26 @@ mmData = zeros(20, 2); %Michaelis-Menten data
 
 %% ____________________
 %% CALCULATIONS
+
+% model product_data
+for i = 1:10
+  xline = mean(test(i).time);
+  yline = mean(test(i).data);
+  xyline = mean(test(i).data .* test(i).time);
+
+  a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).time .^ 2));
+  b = yline - a * xline;
+
+  test(i).coeffs(1) = [a b];
+
+  xline = mean(test(i).dupTime);
+  yline = mean(test(i).dupData);
+  xyline = mean(test(i).dupData .* test(i).dupTime);
+
+  a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).time .^ 2));
+  b = yline - a * xline;
+
+  test(i).coeffs(2) = [a b];
 
 for i = 1:10
   %find the inital slope of each test

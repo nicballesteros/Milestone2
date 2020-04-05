@@ -99,15 +99,13 @@ for i = 1:10
 end;
 
 %implementing Hanes-Woolf Linearization
-figure(1);
-plot(mmData(:,1), mmData(:, 2), 'ko');
+
 
 Y = mmData(:, 1) ./ mmData(:, 2);
 
 X = mmData(:, 1);
 
-figure(2);
-plot(X,Y, 'ro');
+
 
 Xline = mean(X)
 Yline = mean(Y)
@@ -118,23 +116,28 @@ b = Yline - a * Xline
 
 fx = X * a + b;
 
-plot(X, fx, 'b-');
+
 
 Vmax = 1 / a
 Km = b / a
 
 mme = (Vmax * enzymeData) / (Km + enzymeData);%Michaelis-Menten Equation
-
+numberOfDataPoints = 100;
+seperation = (2000 - 3.75 / numberOfDataPoints)
+xmodel = 3.75:seperation:2000;
+MichaelisModel = Vmax * xmodel ./ (Km + xmodel)
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
+figure(1);
+plot(mmData(:,1), mmData(:, 2), 'ko');
+hold on;
+plot(xmodel, MichaelisModel, 'r--');
 
-% figure(2);
-%
-%
-% figure(3);
-% plot(time, enzymeData, 'k.');
-%plot(time, mme, 'r-');
+figure(2);
+plot(X,Y, 'ro');
+hold on;
+plot(X, fx, 'b-');
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT

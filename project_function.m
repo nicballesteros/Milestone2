@@ -49,7 +49,7 @@ Y = y / v0;
 
 X = substrate_data;
 figure(1);
-plot(X,Y, 'or');
+plot(X,Y, 'ro');
 hold on;
 
 Xline = mean(X);
@@ -59,11 +59,11 @@ XYline = mean(X .* Y);
 a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
 b = Yline - a * Xline;
 
-plot(time, a .* time + b, '--b');
+plot(time, a .* time + b, 'b-');
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 figure(2);
-plot(time, substrate_data, '+k');
+plot(time, substrate_data, 'k.');
 
 
 %% ____________________

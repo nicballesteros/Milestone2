@@ -44,11 +44,11 @@ function [Km,Vmax] = project_function(time, enzymeData);
 %     test(test#).concentation;
 
 for i = 1:10
-  test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
+  test(i).data = smoothdata(rmmissing(enzymeData(2:end, i))); %get all not NaN values in each col for each test
   test(i).dataSize = size(test(i).data);
   test(i).time = time(1:test(i).dataSize(1));
   %store the duplicate data
-  test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
+  test(i).dupData = smoothdata(rmmissing(enzymeData(2:end, i + 10))); %get all not NaN values in each col for each duplicate test
   test(i).dupDataSize = size(test(i).dupData);
   test(i).dupTime = time(1:test(i).dupDataSize(1));
   %store the concentation
@@ -74,6 +74,8 @@ for i = 1:10
 end;
 
 %implementing Hanes-Woolf Linearization
+
+disp(mmData);
 
 plot(mmData(:,1), mmData(:, 2));
 

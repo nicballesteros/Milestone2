@@ -94,6 +94,9 @@ for i = 1:10
   mmData(2 * i, 2) = test(i).dupv0;
 end;
 
+for i = 1:10
+  disp(test(i).coeffs);
+end;
 %implementing Hanes-Woolf Linearization
 
 disp(mmData);

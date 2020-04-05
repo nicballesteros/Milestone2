@@ -41,32 +41,39 @@ x = time;
 %% ____________________
 %% CALCULATIONS
 
-v0 = (substrate_data(4) - substrate_data(3)) / (time(4) - time(3));
+v0 = (substrate_data(2) - substrate_data(1)) / (time(2) - time(1))
 
 %implementing Hanes-Woolf Linearization
 
 Y = y / v0;
 
-X = substrate_data;
+X = substrate_data
 figure(1);
 plot(X,Y, 'ro');
 hold on;
 
-Xline = mean(X);
-Yline = mean(Y);
-XYline = mean(X .* Y);
+Xline = mean(X)
+Yline = mean(Y)
+XYline = mean(X .* Y)
 
 a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2))
 b = Yline - a * Xline
 
-fx = X * a + b
+fx = X * a + b;
 
-plot(time, fx, 'b-');
+plot(X, fx, 'b-');
+
+Vmax = 1 / a
+Km = b / a
+
+mme = (Vmax * substrate_data) / (Km + substrate_data);%Michaelis-Menten Equation
+
+
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 figure(2);
 plot(time, substrate_data, 'k.');
-
+plot(time, mme, 'r-');
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT

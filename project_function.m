@@ -35,42 +35,47 @@ function [Km,Vmax] = project_function(time, enzymeData);
 %% ____________________
 %% INITIALIZATION
 
+% Each test is stored in the following manner
+% to get the data for a test the following command is used :
+%     test(test#).data;
+% to get the duplicate data for a test the following command is used:
+%     test(test#).dupData;
+% to get the concentation of the test use:
+%     test(test#).concentation;
+
 for i = 1:10
   test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
+  test(i).dataSize = size(test(i).data);
+  test(i).time = time(1:test(i).dataSize(1));
+  %store the duplicate data
   test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
+  test(i).dupDataSize = size(test(i).dupData);
+  test(i).dupTime = time(1:test(i).dupDataSize(1));
+  %store the concentation
   test(i).concentation = enzymeData(1, i);
 end;
 
-size(test(1).data)
-
-%slice up the enzyme data
-
-% test1 = enzymeData(2:end, 1);
-% test2 = enzymeData(2:end, 2);
-% test3 = enzymeData(2:end, 3);
-% test4 = enzymeData(2:end, 4);
-% test5 = enzymeData(2:end, 5);
-% test6 = enzymeData(2:end, 6);
-% test7 = enzymeData(2:end, 7);
-% test8 = enzymeData(2:end, 8);
-% test9 = enzymeData(2:end, 9);
-% test10 = enzymeData(2:end, 10);
-
-v0 = zeros(20, 1);
-
-y = enzymeData;
-x = time;
+mmData = zeros(20, 2); %Michaelis-Menten data
 
 %% ____________________
 %% CALCULATIONS
 
-for i = 1:20
-  v0(i) = (testData(2, i) - testData(1, i)) / (time(2) - time(1)); %find the inital slope of each one
+for i = 1:10
+  %find the inital slope of each test
+  test(i).v0 = (test(i).data(2) - test(i).data(1)) / (test(i).time(2) - test(i).time(1));
+  %find the inital slope of each duplicate test
+  test(i).dupv0 = (test(i).dupData(2) - test(1).dupData(1)) / (test(i).dupTime(2) - test(i).dupTime(1));
+  %store the values to easily plot the Michaelis-Menten data
+  mmData(2 * i - 1, 1) = test(i).concentation;
+  mmData(2 * i, 1) = test(i).concentation;
+
+  mmData(2 * i - 1, 2) = test(i).v0;
+  mmData(2 * i, 2) = test(i).dupv0;
 end;
 
 %implementing Hanes-Woolf Linearization
 
-disp(v0);
+plot(v0(:,1), v0(:, 2));
 
 % Y = y / v0;
 %

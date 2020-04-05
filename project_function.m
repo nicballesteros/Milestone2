@@ -121,9 +121,8 @@ fx = X * a + b;
 Vmax = 1 / a
 Km = b / a
 
-mme = (Vmax * enzymeData) / (Km + enzymeData);%Michaelis-Menten Equation
 numberOfDataPoints = 100;
-seperation = (2000 - 3.75 / numberOfDataPoints)
+seperation = (2000 - 3.75) / numberOfDataPoints;
 xmodel = 3.75:seperation:2000;
 MichaelisModel = Vmax * xmodel ./ (Km + xmodel)
 
@@ -135,8 +134,8 @@ hold on;
 plot(xmodel, MichaelisModel, 'r--');
 
 figure(2);
-plot(X,Y, 'ro');
-hold on;
+% plot(X,Y, 'ro');
+% hold on;
 plot(X, fx, 'b-');
 
 %% ____________________

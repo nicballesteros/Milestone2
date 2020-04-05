@@ -62,38 +62,38 @@ end;
 
 disp(v0);
 
-Y = y / v0;
-
-X = enzymeData
-figure(1);
-plot(X,Y, 'ro');
-hold on;
-
-Xline = mean(X)
-Yline = mean(Y)
-XYline = mean(X .* Y)
-
-a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2))
-b = Yline - a * Xline
-
-fx = X * a + b;
-
-plot(X, fx, 'b-');
-
-Vmax = 1 / a
-Km = b / a
-
-mme = (Vmax * enzymeData) / (Km + enzymeData);%Michaelis-Menten Equation
+% Y = y / v0;
+%
+% X = enzymeData
+% figure(1);
+% plot(X,Y, 'ro');
+% hold on;
+%
+% Xline = mean(X)
+% Yline = mean(Y)
+% XYline = mean(X .* Y)
+%
+% a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2))
+% b = Yline - a * Xline
+%
+% fx = X * a + b;
+%
+% plot(X, fx, 'b-');
+%
+% Vmax = 1 / a
+% Km = b / a
+%
+% mme = (Vmax * enzymeData) / (Km + enzymeData);%Michaelis-Menten Equation
 
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
-figure(2);
-
-
-figure(3);
-plot(time, enzymeData, 'k.');
+% figure(2);
+%
+%
+% figure(3);
+% plot(time, enzymeData, 'k.');
 %plot(time, mme, 'r-');
 
 %% ____________________

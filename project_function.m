@@ -1,4 +1,4 @@
-function [Km,Vmax] = project_function(time, substrate_data);
+function [Km,Vmax] = project_function(time, enzymeData);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description
@@ -12,7 +12,7 @@ function [Km,Vmax] = project_function(time, substrate_data);
 % Input Arguments
 %
 % time: Input the time column, s
-% substrate_data: Input the substrate concentration column for the initial substrate
+% enzymeData: Input the substrate concentration column for the initial substrate
 % concentration of 3.75, uM
 %
 % Output Arguments
@@ -34,20 +34,37 @@ function [Km,Vmax] = project_function(time, substrate_data);
 %% ____________________
 %% INITIALIZATION
 
-v0 = 0;
-y = substrate_data;
+%slice up the enzyme data
+test1 = enzymeData(:, 1);
+test2 = enzymeData(:, 2);
+test3 = enzymeData(:, 3);
+test4 = enzymeData(:, 4);
+test5 = enzymeData(:, 5);
+test6 = enzymeData(:, 6);
+test7 = enzymeData(:, 7);
+test8 = enzymeData(:, 8);
+test9 = enzymeData(:, 9);
+test10 = enzymeData(:, 10);
+
+v0 = zeros(20, 1);
+y = enzymeData;
 x = time;
 
 %% ____________________
 %% CALCULATIONS
 
-v0 = (substrate_data(2) - substrate_data(1)) / (time(2) - time(1))
+for i = 1:20
+  v0(i) = (enzymeData(2, i) - enzymeData(1, i)) / (time(2) - time(1));
+end;
+
 
 %implementing Hanes-Woolf Linearization
 
+disp(v0);
+
 Y = y / v0;
 
-X = substrate_data
+X = enzymeData
 figure(1);
 plot(X,Y, 'ro');
 hold on;
@@ -66,14 +83,18 @@ plot(X, fx, 'b-');
 Vmax = 1 / a
 Km = b / a
 
-mme = (Vmax * substrate_data) / (Km + substrate_data);%Michaelis-Menten Equation
+mme = (Vmax * enzymeData) / (Km + enzymeData);%Michaelis-Menten Equation
 
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
+
 figure(2);
-plot(time, substrate_data, 'k.');
-plot(time, mme, 'r-');
+
+
+figure(3);
+plot(time, enzymeData, 'k.');
+%plot(time, mme, 'r-');
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT

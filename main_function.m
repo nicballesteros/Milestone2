@@ -2,14 +2,17 @@
 product_data = readmatrix('Data_nextGen_KEtesting_allresults.csv'); %All five of the enzymes substrate data with two trials
 product_data(2,:) = [];
 product_data(1,:) = []; % gets rid of the headers
-counter = 1;
 
-time = product_data(:,1); %Times for each of the substrates transformations\
-substate_data = 1 ./ product_data(:, 2:end);
-initial_375A = substrate_data(:,1); % Initial Test of Enzyme A with initial concentration of 3.75 (uM)
+enzymeA = product_data(:, 2:21);
+enzymeB = product_data(:, 22:41);
+enzymeC = product_data(:, 42:61);
+enzymeD = product_data(:, 62:81);
+enzymeE = product_data(:, 82:101);
 
+time = product_data(:,1); %Times for each of the substrates transformations
 
-initial_375A = rmmissing(initial_375A); %get rid of NaN values
-%time = time(1:size(initial_375A), :); %make the time array the same size as the substrate_data
-
-project_function(time(1:size(initial_375A), :), initial_375A);
+project_function(time, enzymeA);
+% project_function(time, enzymeB);
+% project_function(time, enzymeC);
+% project_function(time, enzymeD);
+% project_function(time, enzymeE);

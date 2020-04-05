@@ -56,10 +56,10 @@ Xline = mean(X);
 Yline = mean(Y);
 XYline = mean(X .* Y);
 
-a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
-b = Yline - a * Xline;
+a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2))
+b = Yline - a * Xline
 
-fx = time * a + b
+fx = X * a + b
 
 plot(time, fx, 'b-');
 %% ____________________

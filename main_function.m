@@ -10,6 +10,6 @@ end;
 time = product_data(:,1); %Times for each of the substrates transformations
 time(1) = []; %get rid of the text above the time col
 
-%for i = 1:5
-  project_function(time, enzyme(1).data);
-%end;
+for i = 1:5
+  project_function(time, enzyme(i).data);
+end;

@@ -83,9 +83,9 @@ mmData = zeros(20, 2); %Michaelis-Menten data
 
 for i = 1:10
   %find the inital slope of each test
-  test(i).v0 = (test(i).time(2) * test(i).coeffs(1,1) + test(i).coeffs(1,2) - test(i).time(1) * test(i).coeffs(1,1) + test(i).coeffs(1,2)) / (test(i).time(2) - test(i).time(1));
+  test(i).v0 = (test(i).data(2) - test(i).data(1) / (test(i).time(2) - test(i).time(1));
   %find the inital slope of each duplicate test
-  test(i).dupv0 = (test(i).dupTime(2) * test(i).coeffs(2,1) + test(i).coeffs(2,2) - test(i).dupTime(1) * test(i).coeffs(2,1) + test(i).coeffs(2,2)) / (test(i).dupTime(2) - test(i).dupTime(1));
+  test(i).dupv0 = (test(i).dupData(2) - test(i).dupData(1) / (test(i).dupTime(2) - test(i).dupTime(1));
   %store the values to easily plot the Michaelis-Menten data
   mmData(2 * i - 1, 1) = test(i).concentation;
   mmData(2 * i, 1) = test(i).concentation;

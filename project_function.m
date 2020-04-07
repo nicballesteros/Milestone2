@@ -55,7 +55,7 @@ for i = 1:10
   test(i).concentation = enzymeData(1, i);
 end;
 
-mmData = zeros(20, 2); %Michaelis-Menten data
+mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 
 %% ____________________
 %% CALCULATIONS
@@ -82,8 +82,6 @@ for i = 1:10
 end;
 
 for i = 1:10
-   %Smoothing the data
-
   %find the inital slope of each test
   test(i).v0 = (test(i).time(2) * test(i).coeffs(1,1) + test(i).coeffs(1,2) - test(i).time(1) * test(i).coeffs(1,1) + test(i).coeffs(1,2)) / (test(i).time(2) - test(i).time(1));
   %find the inital slope of each duplicate test
@@ -96,32 +94,22 @@ for i = 1:10
   mmData(2 * i, 2) = test(i).dupv0;
 end;
 
-for i = 1:10
-  disp(test(i).coeffs);
-end;
-
 %implementing Hanes-Woolf Linearization
-
-
 Y = mmData(:, 1) ./ mmData(:, 2);
 
 X = mmData(:, 1);
 
+Xline = mean(X);
+Yline = mean(Y);
+XYline = mean(X .* Y);
 
-
-Xline = mean(X)
-Yline = mean(Y)
-XYline = mean(X .* Y)
-
-a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2))
-b = Yline - a * Xline
+a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
+b = Yline - a * Xline;
 
 fx = X * a + b;
 
-
-
-Vmax = 1 / a
-Km = b / a
+Vmax = 1 / a;
+Km = b / a;
 
 numberOfDataPoints = 100;
 seperation = (2000 - 3.75) / numberOfDataPoints;
@@ -130,19 +118,27 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
+
 figure(1);
 plot(mmData(:,1), mmData(:, 2), 'ko');
 hold on;
-plot(xmodel, MichaelisModel, 'r--');
+plot(xmodel, MichaelisModel, 'r');
+title("Michaelis-Menten Plot");
+xlabel("[S] micro Molar");
+ylabel("Velocity (Molar/min)");
 
 figure(2);
-% plot(X,Y, 'ro');
-% hold on;
+plot(X,Y, 'ro');
+hold on;
 plot(X, fx, 'b-');
+title("Hanes-Woolf Plot")
+ylabel("[S]/V");
+xlabel("[S]");
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT
-
+fprintf("Vmax: %.3f\n", Vmax);
+fprintf("Km: %.3f\n", Km);
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

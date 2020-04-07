@@ -80,7 +80,7 @@ mmData = zeros(20, 2); %Michaelis-Menten data
 %
 %   test(i).coeffs(2, 1:2) = [a b];
 % end;
-
+ 
 for i = 1:10
   %find the inital slope of each test
   test(i).v0 = (test(i).data(2) - test(i).data(1) / (test(i).time(2) - test(i).time(1));

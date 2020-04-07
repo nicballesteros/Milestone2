@@ -61,27 +61,28 @@ mmData = zeros(20, 2); %Michaelis-Menten data
 %% CALCULATIONS
 
 % model product_data
-% for i = 1:10
-%   xline = mean(test(i).time);
-%   yline = mean(test(i).data);
-%   xyline = mean(test(i).data .* test(i).time);
-%
-%   a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).time .^ 2));
-%   b = yline - a * xline;
-%
-%   test(i).coeffs(1, 1:2) = [a b];
-%
-%   xline = mean(test(i).dupTime);
-%   yline = mean(test(i).dupData);
-%   xyline = mean(test(i).dupData .* test(i).dupTime);
-%
-%   a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).dupTime .^ 2));
-%   b = yline - a * xline;
-%
-%   test(i).coeffs(2, 1:2) = [a b];
-% end;
+for i = 1:10
+  xline = mean(test(i).time);
+  yline = mean(test(i).data);
+  xyline = mean(test(i).data .* test(i).time);
+
+  a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).time .^ 2));
+  b = yline - a * xline;
+
+  test(i).coeffs(1, 1:2) = [a b];
+
+  xline = mean(test(i).dupTime);
+  yline = mean(test(i).dupData);
+  xyline = mean(test(i).dupData .* test(i).dupTime);
+
+  a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).dupTime .^ 2));
+  b = yline - a * xline;
+
+  test(i).coeffs(2, 1:2) = [a b];
+end;
 
 for i = 1:10
+<<<<<<< HEAD
   test(i).data = smooth(test(i).data);
   test(i).dupData = smooth(test(i).dupData);
 
@@ -89,6 +90,14 @@ for i = 1:10
   test(i).v0 = (test(i).data(2) - test(i).data(1)) / (test(i).time(2) - test(i).time(1));
   %find the inital slope of each duplicate test
   test(i).dupv0 = (test(i).dupData(2) - test(i).dupData(1)) / (test(i).dupTime(2) - test(i).dupTime(1));
+=======
+   %Smoothing the data
+
+  %find the inital slope of each test
+  test(i).v0 = (test(i).time(2) * test(i).coeffs(1,1) + test(i).coeffs(1,2) - test(i).time(1) * test(i).coeffs(1,1) + test(i).coeffs(1,2)) / (test(i).time(2) - test(i).time(1));
+  %find the inital slope of each duplicate test
+  test(i).dupv0 = (test(i).time(2) * test(i).coeffs(2,1) + test(i).coeffs(2,2) - test(i).time(1) * test(i).coeffs(2,1) + test(i).coeffs(2,2)) / (test(i).time(2) - test(i).time(1));
+>>>>>>> nic
   %store the values to easily plot the Michaelis-Menten data
   mmData(2 * i - 1, 1) = test(i).concentation;
   mmData(2 * i, 1) = test(i).concentation;

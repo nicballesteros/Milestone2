@@ -119,7 +119,7 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
-figure(1);
+figure;
 plot(mmData(:,1), mmData(:, 2), 'ko');
 hold on;
 plot(xmodel, MichaelisModel, 'r');
@@ -127,7 +127,7 @@ title("Michaelis-Menten Plot");
 xlabel("[S] micro Molar");
 ylabel("Velocity (Molar/min)");
 
-figure(2);
+figure;
 plot(X,Y, 'ro');
 hold on;
 plot(X, fx, 'b-');

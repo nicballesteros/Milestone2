@@ -138,8 +138,7 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
-for i=1:5
-    figure(i);
+    figure;
     subplot(2,1,1);
     plot(mmData(:,1), mmData(:, 2), 'ko');
     hold on;
@@ -149,7 +148,6 @@ for i=1:5
     plot(X,Y, 'ro');
     hold on;
     plot(X, fx, 'b-');
-end
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT

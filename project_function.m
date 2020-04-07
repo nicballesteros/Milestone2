@@ -82,6 +82,9 @@ mmData = zeros(20, 2); %Michaelis-Menten data
 % end;
 
 for i = 1:10
+   %Smoothing the data
+   test(i).data(1)= smoothdata(test(i).data(1),sgolay);
+   test(i).data(2) = smoothdata(test(i).data(2),sgolay);
   %find the inital slope of each test
   test(i).v0 = (test(i).data(2) - test(i).data(1) / (test(i).time(2) - test(i).time(1));
   %find the inital slope of each duplicate test

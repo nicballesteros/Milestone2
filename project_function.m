@@ -40,16 +40,26 @@ function [Km,Vmax] = project_function(time, enzymeData);
 % to get the concentation of the test use:
 %     test(test#).concentation;
 
+%Gets rid of times where reactions are no longer occuring
 for i = 1:10
   test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
+<<<<<<< HEAD
   test(i).dataSize = size(test(i).data); %get how large the data is
   test(i).time = time(1:test(i).dataSize(1)); %set the time vector
   %store the duplicate data
   test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
   test(i).dupDataSize = size(test(i).dupData); %get how large the data is
   test(i).dupTime = time(1:test(i).dupDataSize(1));
+=======
+  test(i).dataSize = size(test(i).data); %Determines the number of seconds that pass before the reaction stops for each initial substrate concentration
+  test(i).time = time(1:test(i).dataSize(1)); %Creates a matrix of times where the reaction was occuring for each initial substrate concentration
+  %store the duplicate data
+  test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
+  test(i).dupDataSize = size(test(i).dupData); %Determines the number of seconds that pass before the duplicate reaction stops for each initial substrate concentration
+  test(i).dupTime = time(1:test(i).dupDataSize(1)); %Creates a matrix of times where the duplicate reaction was occuring for each initial substrate concentration
+>>>>>>> 158af251ae3e7db5f08f35cc4ba5c870e8e15faa
   %store the concentation
-  test(i).concentation = enzymeData(1, i);
+  test(i).concentation = enzymeData(1, i); %Creates a matrix of substrate concentrations
 end;
 
 mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
@@ -57,10 +67,14 @@ mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 %% ____________________
 %% CALCULATIONS
 
+<<<<<<< HEAD
 % ----------------
 % find the v0 data
 % ----------------
 
+=======
+% Creating a model for the product data of each substrate test
+>>>>>>> 158af251ae3e7db5f08f35cc4ba5c870e8e15faa
 for i = 1:10
   test(i).v0 = [0 0];
   x = test(i).time;
@@ -88,15 +102,10 @@ for i = 1:10
 
 <<<<<<< HEAD
 for i = 1:10
-%   test(i).data = smooth(test(i).data);
-%   test(i).dupData = smooth(test(i).dupData);
-
   %find the inital slope of each test
   test(i).v0 = (test(i).data(2) - test(i).data(1)) / (test(i).time(2) - test(i).time(1));
   %find the inital slope of each duplicate test
   test(i).dupv0 = (test(i).dupData(2) - test(i).dupData(1)) / (test(i).dupTime(2) - test(i).dupTime(1));
-
-   %Smoothing the data
 
   %find the inital slope of each test
   test(i).v0 = (test(i).time(2) * test(i).coeffs(1,1) + test(i).coeffs(1,2) - test(i).time(1) * test(i).coeffs(1,1) + test(i).coeffs(1,2)) / (test(i).time(2) - test(i).time(1));
@@ -191,6 +200,7 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     figure;
     subplot(2,1,1);
     plot(mmData(:,1), mmData(:, 2), 'ko');
@@ -220,6 +230,24 @@ title("Hanes-Woolf Plot")
 ylabel("[S]/V");
 xlabel("[S]");
 >>>>>>> beta
+=======
+%Plots the Calculated Reaction Velocities against the Model Reaction
+%Velocities
+ figure;
+ subplot(2,1,1);
+ plot(mmData(:,1), mmData(:, 2), 'ko'); %Calculated Reaction Velocities
+ title('Reaction Velocity vs substrate concentration');
+ xlabel('Initial Substrate Concentration (Um)');
+ ylabel('Reaction Velocity (Um/s)'); 
+ hold on;
+ plot(xmodel, MichaelisModel, 'r--'); %Michealis Model curve
+ legend('Calculated Reaction Velocities','Michealis Model','location','best');
+
+ subplot(2,1,2);
+ plot(X,Y, 'ro');
+ hold on;
+ plot(X, fx, 'b-');
+>>>>>>> 158af251ae3e7db5f08f35cc4ba5c870e8e15faa
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT

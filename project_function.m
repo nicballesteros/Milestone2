@@ -60,15 +60,6 @@ mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 %% ____________________
 %% CALCULATIONS
 
-x = test(1).time;
-y = test(1).data;
-
-x = 1 / x; %linearize the product data
-y = 1 / y; %linearize the product data
-
-figure;
-plot(x,y);
-
 % model product_data
 for i = 1:10
   % x = test(i).time;

@@ -65,9 +65,15 @@ for i = 1:2
   x = test(i).time;
   y = test(i).data;
 
-  % figure;
-  % plot(x,y,'r.');
-  % hold on;
+  x(1) = [];
+  y(1) = [];
+
+  x = x(1:100);
+  y = y(1:100);
+
+  figure;
+  plot(x,y,'r.');
+  hold on;
 
   y = x ./ y; %linearize the product data
 
@@ -78,20 +84,14 @@ for i = 1:2
   a = (xline * yline - xyline) / (xline ^ 2 - mean(x .^ 2));
   b = yline - a * xline;
 
-  fprintf("a: %.3f", a);
-
-  figure;
-  plot(x,y,'r.');
-  hold on;
-  plot(x,x*a+b,'bo');
 
   a = 1 / a;
   b = b * a;
 
-  xDataPoints = 1:1:2000;
+  xDataPoints = 1:1:100;
   yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
 
-  % plot(xDataPoints,yDataPoints, 'bo');
+  plot(xDataPoints,yDataPoints, 'bo');
   % test(i).coeffs(1, 1:2) = [a b];
   %
   % xline = mean(test(i).dupTime);

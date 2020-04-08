@@ -61,7 +61,7 @@ mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 %% CALCULATIONS
 
 % model product_data
-for i = 1:10
+for i = 1:2
   x = test(i).time;
   y = test(i).data;
 
@@ -77,6 +77,8 @@ for i = 1:10
 
   a = (xline * yline - xyline) / (xline ^ 2 - mean(x .^ 2));
   b = yline - a * xline;
+
+  fprintf("a: %.3f", a);
 
   figure;
   plot(x,y,'r.');

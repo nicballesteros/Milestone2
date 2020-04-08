@@ -65,15 +65,11 @@ for i = 1:2
   x = test(i).time;
   y = test(i).data;
 
-  x(1) = [];
-  y(1) = [];
+  x(1) = []; %had a divide by zero error
+  y(1) = []; %to line up both vectors
 
   x = x(1:100);
   y = y(1:100);
-
-  figure;
-  plot(x,y,'r.');
-  hold on;
 
   y = x ./ y; %linearize the product data
 
@@ -84,14 +80,16 @@ for i = 1:2
   a = (xline * yline - xyline) / (xline ^ 2 - mean(x .^ 2));
   b = yline - a * xline;
 
-
   a = 1 / a;
   b = b * a;
 
   xDataPoints = 1:1:100;
   yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
 
-  plot(xDataPoints,yDataPoints, 'bo');
+  test(i).v0 = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
+  mmData(i, 1) = test(i).concentation;
+  mmData(i, 2) = test(i).v0;
+
   % test(i).coeffs(1, 1:2) = [a b];
   %
   % xline = mean(test(i).dupTime);
@@ -118,50 +116,50 @@ end;
 % end;
 %
 % %implementing Hanes-Woolf Linearization
-% Y = mmData(:, 1) ./ mmData(:, 2);
-%
-% X = mmData(:, 1);
-%
-% Xline = mean(X);
-% Yline = mean(Y);
-% XYline = mean(X .* Y);
-%
-% a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
-% b = Yline - a * Xline;
-%
-% fx = X * a + b;
-%
-% Vmax = 1 / a;
-% Km = b / a;
-%
-% numberOfDataPoints = 100;
-% seperation = (2000 - 3.75) / numberOfDataPoints;
-% xmodel = 3.75:seperation:2000;
-% MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
-%
-% %% ____________________
-% %% FORMATTED TEXT/FIGURE DISPLAYS
-%
-% figure(1);
-% plot(mmData(:,1), mmData(:, 2), 'ko');
-% hold on;
-% plot(xmodel, MichaelisModel, 'r');
-% title("Michaelis-Menten Plot");
-% xlabel("[S] micro Molar");
-% ylabel("Velocity (Molar/min)");
-%
-% figure(2);
-% plot(X,Y, 'ro');
-% hold on;
-% plot(X, fx, 'b-');
-% title("Hanes-Woolf Plot")
-% ylabel("[S]/V");
-% xlabel("[S]");
-%
-% %% ____________________
-% %% COMMAND WINDOW OUTPUT
-% fprintf("Vmax: %.3f\n", Vmax);
-% fprintf("Km: %.3f\n", Km);
+Y = mmData(:, 1) ./ mmData(:, 2);
+
+X = mmData(:, 1);
+
+Xline = mean(X);
+Yline = mean(Y);
+XYline = mean(X .* Y);
+
+a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
+b = Yline - a * Xline;
+
+fx = X * a + b;
+
+Vmax = 1 / a;
+Km = b / a;
+
+numberOfDataPoints = 100;
+seperation = (2000 - 3.75) / numberOfDataPoints;
+xmodel = 3.75:seperation:2000;
+MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
+
+%% ____________________
+%% FORMATTED TEXT/FIGURE DISPLAYS
+
+figure(1);
+plot(mmData(:,1), mmData(:, 2), 'ko');
+hold on;
+plot(xmodel, MichaelisModel, 'r');
+title("Michaelis-Menten Plot");
+xlabel("[S] micro Molar");
+ylabel("Velocity (Molar/min)");
+
+figure(2);
+plot(X,Y, 'ro');
+hold on;
+plot(X, fx, 'b-');
+title("Hanes-Woolf Plot")
+ylabel("[S]/V");
+xlabel("[S]");
+
+%% ____________________
+%% COMMAND WINDOW OUTPUT
+fprintf("Vmax: %.3f\n", Vmax);
+fprintf("Km: %.3f\n", Km);
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

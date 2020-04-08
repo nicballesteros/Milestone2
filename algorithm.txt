@@ -1,0 +1,12 @@
+1) read all data from csv in main Function
+2) main function calls project_function for each enzyme
+3) product data is organized in a structure.
+4) for each test and duplicate test, project_function finds best model of the product data for the first 500 datapoints and then uses that model to find v0
+5) each v0 is plotted onto a plot
+6) each v0 is linearized using Hanes-Woolf Linearization
+7) a best fit line is found
+8) the Km and Vmax are found from this best fit line
+9) the Michaelis-Menten model is found from Km and Vmax
+10) this model is plotted
+11) displays km and vmax to command WINDOW
+12) main function saves km and vmax in a matrix 

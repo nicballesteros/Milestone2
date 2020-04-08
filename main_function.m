@@ -1,3 +1,22 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENGR 132
+% Program Description
+%   This program calls project_function for each enzyme's data
+%
+% Assignment Information
+%   Assignment:     M02, Problem 1
+%   Team member:    Nic Ballesteros, nballes@purdue.edu
+%   Team member:    Annabelle Johnson, john245@purdue.edu
+%   Team member:    Alan Camacho, @purdue.edu
+%   Team ID:        005-19
+%   Academic Integrity:
+%     [x] We worked with one or more peers but our collaboration
+%        maintained academic integrity.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ____________________
+%% INITIALIZATION
+
 % %Importing the data
 product_data = readmatrix('Data_nextGen_KEtesting_allresults.csv'); %All five of the enzymes substrate data with two trials
 
@@ -10,6 +29,12 @@ end;
 time = product_data(:,1); %Times for each of the substrates transformations
 time(1) = []; %get rid of the text above the time col
 
-% for i = 1:5
-  project_function(time, enzyme(1).data);
-% end;
+enzyme_parameters = zeros(5, 2); %data for each enzyme storing Vmax and Km
+%the first col will be Km and the second column will be Vmax
+
+%% ____________________
+%% CALCULATIONS
+
+for i = 1:5
+  enzyme_parameters(i,:) = project_function(time, enzyme(i).data);
+end;

@@ -2,24 +2,21 @@ function [Km,Vmax] = project_function(time, enzymeData);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description
-%   This program calculates the Michaelis-Menten parameters, Km and Vmax, for
-% a given substate's data.
+%   This program estimates the Michaelis-Menten parameters, Km and Vmax, for
+% a given enzyme's data.
 %
 % Function Call
-%
-% [Km, Vmax] = project_function(time, substate_data);
+%   [Km, Vmax] = project_function(time, substate_data);
 %
 % Input Arguments
-%
 %   time: the time variable for each given data set.
 %   enzymeData: First row is the inital concentrations of the substrates for
 % each given test. The rest of the rows are the data points for each test; each
 % test in a serparate column.
 %
 % Output Arguments
-%
-% Km: Outputs the estimated Km value for the enzyme
-% Vmax: Outputs the estimated Vmax value for the enzyme
+%   Km: Outputs the estimated Km value for the enzyme
+%   Vmax: Outputs the estimated Vmax value for the enzyme
 %
 % Assignment Information
 %   Assignment:     M02, Problem 1
@@ -60,19 +57,60 @@ mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 %% ____________________
 %% CALCULATIONS
 
-% model product_data
-for i = 1:2
+% ----------------
+% find the v0 data
+% ----------------
+
+for i = 1:10
+  test(i).v0 = [0 0];
   x = test(i).time;
   y = test(i).data;
 
   x(1) = []; %had a divide by zero error
   y(1) = []; %to line up both vectors
 
-  x = x(1:100);
-  y = y(1:100);
+  x = x(1:500); %linearize only the first 500 values
+  y = y(1:500); %linearize only the first 500 values
 
   y = x ./ y; %linearize the product data
 
+  %find line best fit
+  xline = mean(x);
+  yline = mean(y);
+  xyline = mean(x .* y);
+
+  a = (xline * yline - xyline) / (xline ^ 2 - mean(x .^ 2));
+  b = yline - a * xline;
+  %done with best fit
+
+  a = 1 / a;
+  b = b * a;
+
+  %make dataset off of modeled line
+  xDataPoints = 1:500;
+  yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
+
+  %use line to find initial velocity
+  test(i).v0(1) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
+
+  %add it to the Michaelis-Menten dataset
+  mmData(2 * i - 1, 1) = test(i).concentation;
+  mmData(2 * i - 1, 2) = test(i).v0(1);
+
+  %do the same thing as above but for the duplicate data
+  x = test(i).dupTime;
+  y = test(i).dupData;
+
+  x(1) = []; %had a divide by zero error
+  y(1) = []; %to line up both vectors
+
+  x = x(1:500); %linearize only the first 500 values
+  y = y(1:500); %linearize only the first 500 values
+
+  y = x ./ y; %linearize the product data
+
+
+  %find the line best fit
   xline = mean(x);
   yline = mean(y);
   xyline = mean(x .* y);
@@ -83,41 +121,28 @@ for i = 1:2
   a = 1 / a;
   b = b * a;
 
-  xDataPoints = 1:1:100;
+  %use the model to make a dataset
+  xDataPoints = 1:500;
   yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
 
-  test(i).v0 = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
-  mmData(i, 1) = test(i).concentation;
-  mmData(i, 2) = test(i).v0;
+  %use data set to find the inital velocity
+  test(i).v0(2) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
 
-  % test(i).coeffs(1, 1:2) = [a b];
-  %
-  % xline = mean(test(i).dupTime);
-  % yline = mean(test(i).dupData);
-  % xyline = mean(test(i).dupData .* test(i).dupTime);
-  %
-  % a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).dupTime .^ 2));
-  % b = yline - a * xline;
-  %
-  % test(i).coeffs(2, 1:2) = [a b];
+  %add the inital velocity to the Michaelis-Menten dataset
+  mmData(2 * i, 1) = test(i).concentation;
+  mmData(2 * i, 2) = test(i).v0(2);
 end;
 
-% for i = 1:10
-%   %find the inital slope of each test
-%   test(i).v0 = (test(i).time(2) * test(i).coeffs(1,1) + test(i).coeffs(1,2) - test(i).time(1) * test(i).coeffs(1,1) + test(i).coeffs(1,2)) / (test(i).time(2) - test(i).time(1));
-%   %find the inital slope of each duplicate test
-%   test(i).dupv0 = (test(i).time(2) * test(i).coeffs(2,1) + test(i).coeffs(2,2) - test(i).time(1) * test(i).coeffs(2,1) + test(i).coeffs(2,2)) / (test(i).time(2) - test(i).time(1));
-%   %store the values to easily plot the Michaelis-Menten data
-%   mmData(2 * i - 1, 1) = test(i).concentation;
-%   mmData(2 * i, 1) = test(i).concentation;
-%
-%   mmData(2 * i - 1, 2) = test(i).v0;
-%   mmData(2 * i, 2) = test(i).dupv0;
-% end;
-%
-% %implementing Hanes-Woolf Linearization
-Y = mmData(:, 1) ./ mmData(:, 2);
+%--------------------------------------
+%implementing Hanes-Woolf Linearization
+%--------------------------------------
 
+data(:, 1) = mmData(:,1);
+data(:, 2) = mmData(:, 1) ./ mmData(:, 2);
+
+%data = rmoutliers(data);
+
+Y = mmData(:, 1) ./ mmData(:, 2);
 X = mmData(:, 1);
 
 Xline = mean(X);
@@ -127,11 +152,12 @@ XYline = mean(X .* Y);
 a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
 b = Yline - a * Xline;
 
-fx = X * a + b;
+fx = X * a + b; %Hanes-Woolf Line
 
-Vmax = 1 / a;
-Km = b / a;
+Vmax = 1 / a; %calculate Vmax from Hanes-Woolf
+Km = b * Vmax; %calculate Km from Hanes-Woolf
 
+% make a dataset that follows the model
 numberOfDataPoints = 100;
 seperation = (2000 - 3.75) / numberOfDataPoints;
 xmodel = 3.75:seperation:2000;
@@ -140,15 +166,17 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
-figure(1);
+% plot Michaelis-Menten
+figure;
 plot(mmData(:,1), mmData(:, 2), 'ko');
 hold on;
 plot(xmodel, MichaelisModel, 'r');
 title("Michaelis-Menten Plot");
-xlabel("[S] micro Molar");
-ylabel("Velocity (Molar/min)");
+xlabel("[S] (uM)");
+ylabel("Velocity (Molar/sec)");
 
-figure(2);
+%plot Hanes-Woolf
+figure;
 plot(X,Y, 'ro');
 hold on;
 plot(X, fx, 'b-');

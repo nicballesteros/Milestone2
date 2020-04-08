@@ -43,21 +43,12 @@ function [Km,Vmax] = project_function(time, enzymeData);
 %Gets rid of times where reactions are no longer occuring
 for i = 1:10
   test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
-<<<<<<< HEAD
-  test(i).dataSize = size(test(i).data); %get how large the data is
-  test(i).time = time(1:test(i).dataSize(1)); %set the time vector
-  %store the duplicate data
-  test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
-  test(i).dupDataSize = size(test(i).dupData); %get how large the data is
-  test(i).dupTime = time(1:test(i).dupDataSize(1));
-=======
   test(i).dataSize = size(test(i).data); %Determines the number of seconds that pass before the reaction stops for each initial substrate concentration
   test(i).time = time(1:test(i).dataSize(1)); %Creates a matrix of times where the reaction was occuring for each initial substrate concentration
   %store the duplicate data
   test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
   test(i).dupDataSize = size(test(i).dupData); %Determines the number of seconds that pass before the duplicate reaction stops for each initial substrate concentration
   test(i).dupTime = time(1:test(i).dupDataSize(1)); %Creates a matrix of times where the duplicate reaction was occuring for each initial substrate concentration
->>>>>>> 158af251ae3e7db5f08f35cc4ba5c870e8e15faa
   %store the concentation
   test(i).concentation = enzymeData(1, i); %Creates a matrix of substrate concentrations
 end;
@@ -67,14 +58,10 @@ mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 %% ____________________
 %% CALCULATIONS
 
-<<<<<<< HEAD
 % ----------------
 % find the v0 data
 % ----------------
 
-=======
-% Creating a model for the product data of each substrate test
->>>>>>> 158af251ae3e7db5f08f35cc4ba5c870e8e15faa
 for i = 1:10
   test(i).v0 = [0 0];
   x = test(i).time;
@@ -100,20 +87,6 @@ for i = 1:10
   a = 1 / a;
   b = b * a;
 
-<<<<<<< HEAD
-for i = 1:10
-  %find the inital slope of each test
-  test(i).v0 = (test(i).data(2) - test(i).data(1)) / (test(i).time(2) - test(i).time(1));
-  %find the inital slope of each duplicate test
-  test(i).dupv0 = (test(i).dupData(2) - test(i).dupData(1)) / (test(i).dupTime(2) - test(i).dupTime(1));
-
-  %find the inital slope of each test
-  test(i).v0 = (test(i).time(2) * test(i).coeffs(1,1) + test(i).coeffs(1,2) - test(i).time(1) * test(i).coeffs(1,1) + test(i).coeffs(1,2)) / (test(i).time(2) - test(i).time(1));
-  %find the inital slope of each duplicate test
-  test(i).dupv0 = (test(i).time(2) * test(i).coeffs(2,1) + test(i).coeffs(2,2) - test(i).time(1) * test(i).coeffs(2,1) + test(i).coeffs(2,2)) / (test(i).time(2) - test(i).time(1));
-  
-  %store the values to easily plot the Michaelis-Menten data
-=======
   %make dataset off of modeled line
   xDataPoints = 1:500;
   yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
@@ -122,7 +95,6 @@ for i = 1:10
   test(i).v0(1) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
 
   %add it to the Michaelis-Menten dataset
->>>>>>> beta
   mmData(2 * i - 1, 1) = test(i).concentation;
   mmData(2 * i - 1, 2) = test(i).v0(1);
 
@@ -130,12 +102,8 @@ for i = 1:10
   x = test(i).dupTime;
   y = test(i).dupData;
 
-<<<<<<< HEAD
-disp(mmData);
-=======
   x(1) = []; %had a divide by zero error
   y(1) = []; %to line up both vectors
->>>>>>> beta
 
   x = x(1:500); %linearize only the first 500 values
   y = y(1:500); %linearize only the first 500 values
@@ -199,55 +167,27 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    figure;
-    subplot(2,1,1);
-    plot(mmData(:,1), mmData(:, 2), 'ko');
-    hold on;
-    plot(xmodel, MichaelisModel, 'r--');
-
-    subplot(2,1,2);
-    plot(X,Y, 'ro');
-    hold on;
-    plot(X, fx, 'b-');
-=======
-% plot Michaelis-Menten
-figure;
-plot(mmData(:,1), mmData(:, 2), 'ko');
-hold on;
-plot(xmodel, MichaelisModel, 'r');
-title("Michaelis-Menten Plot");
-xlabel("[S] (uM)");
-ylabel("Velocity (Molar/sec)");
-
-%plot Hanes-Woolf
-figure;
-plot(X,Y, 'ro');
-hold on;
-plot(X, fx, 'b-');
-title("Hanes-Woolf Plot")
-ylabel("[S]/V");
-xlabel("[S]");
->>>>>>> beta
-=======
 %Plots the Calculated Reaction Velocities against the Model Reaction
 %Velocities
  figure;
  subplot(2,1,1);
  plot(mmData(:,1), mmData(:, 2), 'ko'); %Calculated Reaction Velocities
- title('Reaction Velocity vs substrate concentration');
- xlabel('Initial Substrate Concentration (Um)');
- ylabel('Reaction Velocity (Um/s)'); 
+ title('Reaction Velocity as Initial [S] changes');
+ xlabel('Initial Substrate Concentration [S] (uM)');
+ ylabel('Reaction Velocity (uM/s)');
  hold on;
  plot(xmodel, MichaelisModel, 'r--'); %Michealis Model curve
- legend('Calculated Reaction Velocities','Michealis Model','location','best');
+ legend('Calculated Reaction Velocities','Michaelis Model','location','best');
 
  subplot(2,1,2);
  plot(X,Y, 'ro');
  hold on;
  plot(X, fx, 'b-');
->>>>>>> 158af251ae3e7db5f08f35cc4ba5c870e8e15faa
+ xlabel('Initial Substrate Concentration (uM)');
+ ylabel('Velocity / [S]');
+ title('Hanes-Woolf Linearization');
+ legend('Linarized Velocity Data', 'Best Fit Line', 'location', 'best');
+
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT

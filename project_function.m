@@ -45,11 +45,11 @@ function [Km,Vmax] = project_function(time, enzymeData);
 
 for i = 1:10
   test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
-  test(i).dataSize = size(test(i).data);
-  test(i).time = time(1:test(i).dataSize(1));
+  test(i).dataSize = size(test(i).data); %get how large the data is
+  test(i).time = time(1:test(i).dataSize(1)); %set the time vector
   %store the duplicate data
   test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
-  test(i).dupDataSize = size(test(i).dupData);
+  test(i).dupDataSize = size(test(i).dupData); %get how large the data is
   test(i).dupTime = time(1:test(i).dupDataSize(1));
   %store the concentation
   test(i).concentation = enzymeData(1, i);
@@ -62,6 +62,15 @@ mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 
 % model product_data
 for i = 1:10
+  x = test(i).time;
+  y = test(i).data;
+
+  x = 1 / x; %linearize the product data
+  y = 1 / y; %linearize the product data
+
+  figure;
+  plot(x,y);
+
   xline = mean(test(i).time);
   yline = mean(test(i).data);
   xyline = mean(test(i).data .* test(i).time);

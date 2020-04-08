@@ -65,9 +65,9 @@ for i = 1:10
   x = test(i).time;
   y = test(i).data;
 
-  figure;
-  plot(x,y,'r.');
-  hold on;
+  % figure;
+  % plot(x,y,'r.');
+  % hold on;
 
   y = x ./ y; %linearize the product data
 
@@ -78,13 +78,18 @@ for i = 1:10
   a = (xline * yline - xyline) / (xline ^ 2 - mean(x .^ 2));
   b = yline - a * xline;
 
+  figure;
+  plot(x,y,'r.');
+  hold on;
+  plot(x,x*a+b,'bo');
+
   a = 1 / a;
   b = b * a;
 
   xDataPoints = 1:1:2000;
   yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
 
-  plot(xDataPoints,yDataPoints, 'bo');
+  % plot(xDataPoints,yDataPoints, 'bo');
   % test(i).coeffs(1, 1:2) = [a b];
   %
   % xline = mean(test(i).dupTime);

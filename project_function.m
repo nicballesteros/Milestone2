@@ -82,7 +82,7 @@ for i = 1:10
   b = b * a;
 
   xDataPoints = 1:1:2000;
-  yDataPoints = (a * xDataPoints) / (b + xDataPoints);
+  yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
 
   plot(xDataPoints,yDataPoints, 'bo');
   % test(i).coeffs(1, 1:2) = [a b];

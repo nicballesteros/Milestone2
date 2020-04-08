@@ -61,7 +61,7 @@ mmData = zeros(20, 2); %Michaelis-Menten data
 %% ____________________
 %% CALCULATIONS
 
-% model product_data
+% Creating a model for the product data of each substrate test
 for i = 1:10
   xline = mean(test(i).time);
   yline = mean(test(i).data);

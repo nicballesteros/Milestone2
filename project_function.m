@@ -62,92 +62,99 @@ mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 
 % model product_data
 for i = 1:10
-  % x = test(i).time;
-  % y = test(i).data;
-  %
-  % x = 1 / x; %linearize the product data
-  % y = 1 / y; %linearize the product data
-  %
-  % figure;
-  % plot(x,y);
+  x = test(i).time;
+  y = test(i).data;
 
-  xline = mean(test(i).time);
-  yline = mean(test(i).data);
-  xyline = mean(test(i).data .* test(i).time);
+  figure;
+  plot(x,y,'r.');
+  hold on;
 
-  a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).time .^ 2));
+  y = x ./ y; %linearize the product data
+
+  xline = mean(x);
+  yline = mean(y);
+  xyline = mean(x .* y);
+
+  a = (xline * yline - xyline) / (xline ^ 2 - mean(x .^ 2));
   b = yline - a * xline;
 
-  test(i).coeffs(1, 1:2) = [a b];
+  a = 1 / a;
+  b = b * a;
 
-  xline = mean(test(i).dupTime);
-  yline = mean(test(i).dupData);
-  xyline = mean(test(i).dupData .* test(i).dupTime);
+  xDataPoints = 1:1:2000;
+  yDataPoints = (a * xDataPoints) / (b + xDataPoints);
 
-  a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).dupTime .^ 2));
-  b = yline - a * xline;
-
-  test(i).coeffs(2, 1:2) = [a b];
+  plot(xDataPoints,yDataPoints, 'bo');
+  % test(i).coeffs(1, 1:2) = [a b];
+  %
+  % xline = mean(test(i).dupTime);
+  % yline = mean(test(i).dupData);
+  % xyline = mean(test(i).dupData .* test(i).dupTime);
+  %
+  % a = (xline * yline - xyline) / (xline ^ 2 - mean(test(i).dupTime .^ 2));
+  % b = yline - a * xline;
+  %
+  % test(i).coeffs(2, 1:2) = [a b];
 end;
 
-for i = 1:10
-  %find the inital slope of each test
-  test(i).v0 = (test(i).time(2) * test(i).coeffs(1,1) + test(i).coeffs(1,2) - test(i).time(1) * test(i).coeffs(1,1) + test(i).coeffs(1,2)) / (test(i).time(2) - test(i).time(1));
-  %find the inital slope of each duplicate test
-  test(i).dupv0 = (test(i).time(2) * test(i).coeffs(2,1) + test(i).coeffs(2,2) - test(i).time(1) * test(i).coeffs(2,1) + test(i).coeffs(2,2)) / (test(i).time(2) - test(i).time(1));
-  %store the values to easily plot the Michaelis-Menten data
-  mmData(2 * i - 1, 1) = test(i).concentation;
-  mmData(2 * i, 1) = test(i).concentation;
-
-  mmData(2 * i - 1, 2) = test(i).v0;
-  mmData(2 * i, 2) = test(i).dupv0;
-end;
-
-%implementing Hanes-Woolf Linearization
-Y = mmData(:, 1) ./ mmData(:, 2);
-
-X = mmData(:, 1);
-
-Xline = mean(X);
-Yline = mean(Y);
-XYline = mean(X .* Y);
-
-a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
-b = Yline - a * Xline;
-
-fx = X * a + b;
-
-Vmax = 1 / a;
-Km = b / a;
-
-numberOfDataPoints = 100;
-seperation = (2000 - 3.75) / numberOfDataPoints;
-xmodel = 3.75:seperation:2000;
-MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
-
-%% ____________________
-%% FORMATTED TEXT/FIGURE DISPLAYS
-
-figure(1);
-plot(mmData(:,1), mmData(:, 2), 'ko');
-hold on;
-plot(xmodel, MichaelisModel, 'r');
-title("Michaelis-Menten Plot");
-xlabel("[S] micro Molar");
-ylabel("Velocity (Molar/min)");
-
-figure(2);
-plot(X,Y, 'ro');
-hold on;
-plot(X, fx, 'b-');
-title("Hanes-Woolf Plot")
-ylabel("[S]/V");
-xlabel("[S]");
-
-%% ____________________
-%% COMMAND WINDOW OUTPUT
-fprintf("Vmax: %.3f\n", Vmax);
-fprintf("Km: %.3f\n", Km);
+% for i = 1:10
+%   %find the inital slope of each test
+%   test(i).v0 = (test(i).time(2) * test(i).coeffs(1,1) + test(i).coeffs(1,2) - test(i).time(1) * test(i).coeffs(1,1) + test(i).coeffs(1,2)) / (test(i).time(2) - test(i).time(1));
+%   %find the inital slope of each duplicate test
+%   test(i).dupv0 = (test(i).time(2) * test(i).coeffs(2,1) + test(i).coeffs(2,2) - test(i).time(1) * test(i).coeffs(2,1) + test(i).coeffs(2,2)) / (test(i).time(2) - test(i).time(1));
+%   %store the values to easily plot the Michaelis-Menten data
+%   mmData(2 * i - 1, 1) = test(i).concentation;
+%   mmData(2 * i, 1) = test(i).concentation;
+%
+%   mmData(2 * i - 1, 2) = test(i).v0;
+%   mmData(2 * i, 2) = test(i).dupv0;
+% end;
+%
+% %implementing Hanes-Woolf Linearization
+% Y = mmData(:, 1) ./ mmData(:, 2);
+%
+% X = mmData(:, 1);
+%
+% Xline = mean(X);
+% Yline = mean(Y);
+% XYline = mean(X .* Y);
+%
+% a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
+% b = Yline - a * Xline;
+%
+% fx = X * a + b;
+%
+% Vmax = 1 / a;
+% Km = b / a;
+%
+% numberOfDataPoints = 100;
+% seperation = (2000 - 3.75) / numberOfDataPoints;
+% xmodel = 3.75:seperation:2000;
+% MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
+%
+% %% ____________________
+% %% FORMATTED TEXT/FIGURE DISPLAYS
+%
+% figure(1);
+% plot(mmData(:,1), mmData(:, 2), 'ko');
+% hold on;
+% plot(xmodel, MichaelisModel, 'r');
+% title("Michaelis-Menten Plot");
+% xlabel("[S] micro Molar");
+% ylabel("Velocity (Molar/min)");
+%
+% figure(2);
+% plot(X,Y, 'ro');
+% hold on;
+% plot(X, fx, 'b-');
+% title("Hanes-Woolf Plot")
+% ylabel("[S]/V");
+% xlabel("[S]");
+%
+% %% ____________________
+% %% COMMAND WINDOW OUTPUT
+% fprintf("Vmax: %.3f\n", Vmax);
+% fprintf("Km: %.3f\n", Km);
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

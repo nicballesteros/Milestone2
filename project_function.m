@@ -43,16 +43,17 @@ function [Km,Vmax] = project_function(time, enzymeData);
 % to get the concentation of the test use:
 %     test(test#).concentation;
 
+%Gets rid of times where reactions are no longer occuring
 for i = 1:10
   test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
-  test(i).dataSize = size(test(i).data);
-  test(i).time = time(1:test(i).dataSize(1));
+  test(i).dataSize = size(test(i).data); %Determines the number of seconds that pass before the reaction stops for each initial substrate concentration
+  test(i).time = time(1:test(i).dataSize(1)); %Creates a matrix of times where the reaction was occuring for each initial substrate concentration
   %store the duplicate data
   test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
-  test(i).dupDataSize = size(test(i).dupData);
-  test(i).dupTime = time(1:test(i).dupDataSize(1));
+  test(i).dupDataSize = size(test(i).dupData); %Determines the number of seconds that pass before the duplicate reaction stops for each initial substrate concentration
+  test(i).dupTime = time(1:test(i).dupDataSize(1)); %Creates a matrix of times where the duplicate reaction was occuring for each initial substrate concentration
   %store the concentation
-  test(i).concentation = enzymeData(1, i);
+  test(i).concentation = enzymeData(1, i); %Creates a matrix of substrate concentrations
 end;
 
 mmData = zeros(20, 2); %Michaelis-Menten data
@@ -82,15 +83,10 @@ for i = 1:10
 end;
 
 for i = 1:10
-%   test(i).data = smooth(test(i).data);
-%   test(i).dupData = smooth(test(i).dupData);
-
   %find the inital slope of each test
   test(i).v0 = (test(i).data(2) - test(i).data(1)) / (test(i).time(2) - test(i).time(1));
   %find the inital slope of each duplicate test
   test(i).dupv0 = (test(i).dupData(2) - test(i).dupData(1)) / (test(i).dupTime(2) - test(i).dupTime(1));
-
-   %Smoothing the data
 
   %find the inital slope of each test
   test(i).v0 = (test(i).time(2) * test(i).coeffs(1,1) + test(i).coeffs(1,2) - test(i).time(1) * test(i).coeffs(1,1) + test(i).coeffs(1,2)) / (test(i).time(2) - test(i).time(1));
@@ -138,11 +134,17 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
+%Plots the Calculated Reaction Velocities against the Model Reaction
+%Velocities
  figure;
  subplot(2,1,1);
- plot(mmData(:,1), mmData(:, 2), 'ko');
+ plot(mmData(:,1), mmData(:, 2), 'ko'); %Calculated Reaction Velocities
+ title('Reaction Velocity vs substrate concentration');
+ xlabel('Initial Substrate Concentration (Um)');
+ ylabel('Reaction Velocity (Um/s)'); 
  hold on;
- plot(xmodel, MichaelisModel, 'r--');
+ plot(xmodel, MichaelisModel, 'r--'); %Michealis Model curve
+ legend('Calculated Reaction Velocities','Michealis Model','location','best');
 
  subplot(2,1,2);
  plot(X,Y, 'ro');

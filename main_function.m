@@ -29,10 +29,9 @@ end;
 time = product_data(:,1); %Times for each of the substrates transformations
 time(1) = []; %get rid of the text above the time col
 
-<<<<<<< HEAD
 for i = 1:5
   project_function(time, enzyme(i).data);
-=======
+end
 enzyme_parameters = zeros(5, 2); %data for each enzyme storing Vmax and Km
 %the first col will be Km and the second column will be Vmax
 
@@ -41,5 +40,4 @@ enzyme_parameters = zeros(5, 2); %data for each enzyme storing Vmax and Km
 
 for i = 1:5
   enzyme_parameters(i,:) = project_function(time, enzyme(i).data);
->>>>>>> beta
 end;

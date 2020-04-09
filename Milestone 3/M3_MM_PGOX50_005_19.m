@@ -1,4 +1,4 @@
-replace this text with your function definition line
+function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description 
@@ -14,14 +14,14 @@ replace this text with a commented list of the input arguments
 replace this text with a commented list of the output arguments
 %
 % Assignment Information
-%   Assignment:     M##, Problem #
-%   Team member:    Name, login@purdue.edu [repeat for each person]
-%   Team ID:        ###-##
+%   Assignment:     M03, Part 2
+%   Team member:    Nic Ballesteros, nballes@purdue.edu 
+%   Team member:    Alan Camacho , Camachop@purdue.edu 
+%   Team member:    Annabelle Johnson, john2445@purdue.edu 
+%   Team ID:        005-19
 %   Academic Integrity:
-%     [] We worked with one or more peers but our collaboration
+%     [x] We worked with one or more peers but our collaboration
 %        maintained academic integrity.
-%     Peers we worked with: Name, login@purdue [repeat for each]
-did you complete the assignment information? delete this line if yes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ____________________

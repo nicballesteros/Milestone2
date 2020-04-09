@@ -29,16 +29,16 @@ replace this text with a commented list of the output arguments
 
 Substrate_data = readmatrix('Data_PGOX50_enzyme.csv');
 time = Substrate_data(:,1);
-concentration_375 = Substrate_data(:,2);
-concentration_75 = Substrate_data(:,3);
-concentration_15 = Substrate_data(:,4);
-concentration_30 = Substrate_data(:,5);
-concentration_65 = Substrate_data(:,6);
-concentration_125 = Substrate_data(:,7);
-concentration_250 = Substrate_data(:,8);
-concentration_500 = Substrate_data(:,9);
-concentration_1000 = Substrate_data(:,10);
-concentration_2000 = Substrate_data(:,11);
+375_concentration = Substrate_data(:,2);
+75_concentration = Substrate_data(:,2);
+15_concentration = Substrate_data(:,2);
+30_concentration = Substrate_data(:,2);
+65_concentration = Substrate_data(:,2);
+125_concentration = Substrate_data(:,2);
+5_concentration = Substrate_data(:,2);
+375_concentration = Substrate_data(:,2);
+375_concentration = Substrate_data(:,2);
+375_concentration = Substrate_data(:,2);
 V_initial = [0.028, 0.055, 0.11, 0.19,0.338, 0.613, 0.917, 1.201, 1.282, 1.57];
 Km = 214.28;
 Vmax = 1.61;

@@ -2,16 +2,24 @@ function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description 
-replace this text with your program decription as a comment
+%This code uses previously calculated approximations of V0, Vmax and Km
+%from a given set of data and determines the error presented within these
+%calculations.
 %
 % Function Call
-replace this text with a comment that states the function call
+%function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
 %
 % Input Arguments
-replace this text with a commented list of the input arguments
+%
+% Substrate_data: input the enzyme test substrate data
+% V_initials: input a vector of V0 values calculated from the orginial
+% substrate data
+% Vmax: Input the calculated approximation of Vmax
+% Km: Input the calculated approximation of Km
 %
 % Output Arguments
-replace this text with a commented list of the output arguments
+%
+% SSEdata: Outputs the error presented within previous calculations
 %
 % Assignment Information
 %   Assignment:     M03, Part 2
@@ -39,7 +47,7 @@ concentration_250 = Substrate_data(:,8);
 concentration_500 = Substrate_data(:,9);
 concentration_1000 = Substrate_data(:,10);
 concentration_2000 = Substrate_data(:,11);
-V_initial = [0.028, 0.055, 0.11, 0.19,0.338, 0.613, 0.917, 1.201, 1.282, 1.57];
+V_initials = [0.028, 0.055, 0.11, 0.19,0.338, 0.613, 0.917, 1.201, 1.282, 1.57];
 Km = 214.28;
 Vmax = 1.61;
 

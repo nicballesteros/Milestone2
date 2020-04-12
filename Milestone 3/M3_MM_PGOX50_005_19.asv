@@ -1,7 +1,7 @@
 function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ENGR 132
-% Program Description
+% ENGR 132 
+% Program Description 
 %This code uses previously calculated approximations of V0, Vmax and Km
 %from a given set of data and determines the error presented within these
 %calculations.
@@ -23,9 +23,9 @@ function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
 %
 % Assignment Information
 %   Assignment:     M03, Part 2
-%   Team member:    Nic Ballesteros, nballes@purdue.edu
-%   Team member:    Alan Camacho , Camachop@purdue.edu
-%   Team member:    Annabelle Johnson, john2445@purdue.edu
+%   Team member:    Nic Ballesteros, nballes@purdue.edu 
+%   Team member:    Alan Camacho , Camachop@purdue.edu 
+%   Team member:    Annabelle Johnson, john2445@purdue.edu 
 %   Team ID:        005-19
 %   Academic Integrity:
 %     [x] We worked with one or more peers but our collaboration
@@ -69,3 +69,6 @@ Vmax = 1.61;
 % source, either modified or unmodified. Neither have we provided
 % access to my code to another. The program we are submitting
 % is our own original work.
+
+
+

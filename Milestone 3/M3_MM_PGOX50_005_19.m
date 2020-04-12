@@ -1,4 +1,4 @@
-function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
+% function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description
@@ -37,27 +37,58 @@ function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
 
 Substrate_data = readmatrix('Data_PGOX50_enzyme.csv');
 time = Substrate_data(:,1);
-concentration_375 = Substrate_data(:,2);
-concentration_75 = Substrate_data(:,3);
-concentration_15 = Substrate_data(:,4);
-concentration_30 = Substrate_data(:,5);
-concentration_65 = Substrate_data(:,6);
-concentration_125 = Substrate_data(:,7);
-concentration_250 = Substrate_data(:,8);
-concentration_500 = Substrate_data(:,9);
-concentration_1000 = Substrate_data(:,10);
-concentration_2000 = Substrate_data(:,11);
-V_initials = [0.028, 0.055, 0.11, 0.19,0.338, 0.613, 0.917, 1.201, 1.282, 1.57];
+concentration.data(1) = Substrate_data(:,2); %3.75
+concentration.data(2) = Substrate_data(:,3); %7.5
+concentration.data(3) = Substrate_data(:,4); %15
+concentration.data(4) = Substrate_data(:,5); %30
+concentration.data(5) = Substrate_data(:,6); %65
+concentration.data(6) = Substrate_data(:,7); %125
+concentration.data(7) = Substrate_data(:,8); %250
+concentration.data(8) = Substrate_data(:,9); %500
+concentration.data(9) = Substrate_data(:,10);%1000
+concentration.data(10) = Substrate_data(:,11);%2000
+
+concentration.v0(1) = 0.028;
+concentration.v0(2) = 0.055;
+concentration.v0(3) = 0.11;
+concentration.v0(4) = 0.19;
+concentration.v0(5) = 0.338;
+concentration.v0(6) = 0.613;
+concentration.v0(7) = 0.917;
+concentration.v0(8) = 1.201;
+concentration.v0(9) = 1.282;
+concentration.v0(10) = 1.57;
+
+
+% V_initials = [0.028, 0.055, 0.11, 0.19,0.338, 0.613, 0.917, 1.201, 1.282, 1.57];
 Km = 214.28;
 Vmax = 1.61;
 
 %% ____________________
 %% CALCULATIONS
 
+%make dataset for line
+
+for i = 1:10
+  x = 0;
+  y = 0;
+  counter = 1;
+  while y < concentration.data(i)(end); %for visual
+    y = concetration.v0(i) * x + concentration.data(i)(1);
+    concetration.v0line(i)(counter, :) = [x y];
+    x = x + 50
+    counter = counter + 1;
+  end;
+end;
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
+figure;
+subplot(2,5,1);
+plot(time, concentration_3_75, 'b+');
+hold on;
+plot(concentration.v0line(:, 1), concentration.v0line(:, 2), 'r-');
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT

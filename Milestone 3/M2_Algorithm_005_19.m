@@ -41,17 +41,33 @@ function [Km,Vmax] = project_function(time, enzymeData);
 %     test(test#).concentation;
 
 %Gets rid of times where reactions are no longer occuring
-for i = 1:10
-  test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
-  test(i).dataSize = size(test(i).data); %Determines the number of seconds that pass before the reaction stops for each initial substrate concentration
-  test(i).time = time(1:test(i).dataSize(1)); %Creates a matrix of times where the reaction was occuring for each initial substrate concentration
-  %store the duplicate data
-  test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
-  test(i).dupDataSize = size(test(i).dupData); %Determines the number of seconds that pass before the duplicate reaction stops for each initial substrate concentration
-  test(i).dupTime = time(1:test(i).dupDataSize(1)); %Creates a matrix of times where the duplicate reaction was occuring for each initial substrate concentration
-  %store the concentation
-  test(i).concentation = enzymeData(1, i); %Creates a matrix of substrate concentrations
-end; %end for
+sizeOfData = size(enzymeData);
+
+if sizeOfData(2) == 20
+  for i = 1:10
+    test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
+    test(i).dataSize = size(test(i).data); %Determines the number of seconds that pass before the reaction stops for each initial substrate concentration
+    test(i).time = time(1:test(i).dataSize(1)); %Creates a matrix of times where the reaction was occuring for each initial substrate concentration
+    %store the duplicate data
+    test(i).dupData = rmmissing(enzymeData(2:end, i + 10)); %get all not NaN values in each col for each duplicate test
+    test(i).dupDataSize = size(test(i).dupData); %Determines the number of seconds that pass before the duplicate reaction stops for each initial substrate concentration
+    test(i).dupTime = time(1:test(i).dupDataSize(1)); %Creates a matrix of times where the duplicate reaction was occuring for each initial substrate concentration
+    %store the concentation
+    test(i).concentation = enzymeData(1, i); %Creates a matrix of substrate concentrations
+  end;
+elseif sizeOfData(2) == 10
+  for i = 1:10
+    test(i).data = rmmissing(enzymeData(2:end, i)); %get all not NaN values in each col for each test
+    test(i).dataSize = size(test(i).data); %Determines the number of seconds that pass before the reaction stops for each initial substrate concentration
+    test(i).time = time(1:test(i).dataSize(1)); %Creates a matrix of times where the reaction was occuring for each initial substrate concentration
+    %store the concentation
+    test(i).concentation = enzymeData(1, i); %Creates a matrix of substrate concentrations
+  end;
+else
+  fprintf('error\n');
+  return;
+end;
+
 mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 
 %% ____________________
@@ -62,7 +78,11 @@ mmData = zeros(20, 2); %Michaelis-Menten data that will eventually be plotted
 % ----------------
 
 for i = 1:10
-  test(i).v0 = [0 0];
+  if sizeOfData(2) == 20
+    test(i).v0 = [0 0];
+  else
+    test(i).v0 = 0;
+  end;
   x = test(i).time;
   y = test(i).data;
 
@@ -93,44 +113,50 @@ for i = 1:10
   %use line to find initial velocity
   test(i).v0(1) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
 
-  %add it to the Michaelis-Menten dataset
-  mmData(2 * i - 1, 1) = test(i).concentation;
-  mmData(2 * i - 1, 2) = test(i).v0(1);
+  if sizeOfData(2) == 20
+    %add it to the Michaelis-Menten dataset
+    mmData(2 * i - 1, 1) = test(i).concentation;
+    mmData(2 * i - 1, 2) = test(i).v0(1);
 
-  %do the same thing as above but for the duplicate data
-  x = test(i).dupTime;
-  y = test(i).dupData;
+    %do the same thing as above but for the duplicate data
+    x = test(i).dupTime;
+    y = test(i).dupData;
 
-  x(1) = []; %had a divide by zero error
-  y(1) = []; %to line up both vectors
+    x(1) = []; %had a divide by zero error
+    y(1) = []; %to line up both vectors
 
-  x = x(1:500); %linearize only the first 500 values
-  y = y(1:500); %linearize only the first 500 values
+    x = x(1:500); %linearize only the first 500 values
+    y = y(1:500); %linearize only the first 500 values
 
-  y = x ./ y; %linearize the product data
+    y = x ./ y; %linearize the product data
 
 
-  %find the line best fit
-  xline = mean(x);
-  yline = mean(y);
-  xyline = mean(x .* y);
+    %find the line best fit
+    xline = mean(x);
+    yline = mean(y);
+    xyline = mean(x .* y);
 
-  a = (xline * yline - xyline) / (xline ^ 2 - mean(x .^ 2));
-  b = yline - a * xline;
+    a = (xline * yline - xyline) / (xline ^ 2 - mean(x .^ 2));
+    b = yline - a * xline;
 
-  a = 1 / a;
-  b = b * a;
+    a = 1 / a;
+    b = b * a;
 
-  %use the model to make a dataset
-  xDataPoints = 1:500;
-  yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
+    %use the model to make a dataset
+    xDataPoints = 1:500;
+    yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
 
-  %use data set to find the inital velocity
-  test(i).v0(2) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
+    %use data set to find the inital velocity
+    test(i).v0(2) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
 
-  %add the inital velocity to the Michaelis-Menten dataset
-  mmData(2 * i, 1) = test(i).concentation;
-  mmData(2 * i, 2) = test(i).v0(2);
+    %add the inital velocity to the Michaelis-Menten dataset
+    mmData(2 * i, 1) = test(i).concentation;
+    mmData(2 * i, 2) = test(i).v0(2);
+  else
+    mmData(i, 1) = test(i).concentration;
+    mmData(i, 2) = test(i).v0;
+    mmData(11:end, 1:2) = [];
+  end;
 end;
 
 %--------------------------------------

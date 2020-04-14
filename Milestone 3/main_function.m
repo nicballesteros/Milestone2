@@ -18,7 +18,7 @@
 %% INITIALIZATION
 
 % %Importing the data
-product_data = readmatrix('Data_nextGen_KEtesting_allresults.csv'); %All five of the enzymes substrate data with two trials
+product_data = readmatrix('../Data_nextGen_KEtesting_allresults.csv'); %All five of the enzymes substrate data with two trials
 
 product_data(2,:) = []; % gets rid of the column headers
 

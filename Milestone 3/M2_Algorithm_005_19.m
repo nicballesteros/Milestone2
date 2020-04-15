@@ -53,7 +53,7 @@ if sizeOfData(2) == 20
     test(i).dupDataSize = size(test(i).dupData); %Determines the number of seconds that pass before the duplicate reaction stops for each initial substrate concentration
     test(i).dupTime = time(1:test(i).dupDataSize(1)); %Creates a matrix of times where the duplicate reaction was occuring for each initial substrate concentration
     %store the concentation
-    test(i).concentation = enzymeData(1, i); %Creates a matrix of substrate concentrations
+    test(i).concentration = enzymeData(1, i); %Creates a matrix of substrate concentrations
   end;
 elseif sizeOfData(2) == 10
   for i = 1:10
@@ -61,7 +61,7 @@ elseif sizeOfData(2) == 10
     test(i).dataSize = size(test(i).data); %Determines the number of seconds that pass before the reaction stops for each initial substrate concentration
     test(i).time = time(1:test(i).dataSize(1)); %Creates a matrix of times where the reaction was occuring for each initial substrate concentration
     %store the concentation
-    test(i).concentation = enzymeData(1, i); %Creates a matrix of substrate concentrations
+    test(i).concentration = enzymeData(1, i); %Creates a matrix of substrate concentrations
   end;
 else
   fprintf('error\n');
@@ -83,16 +83,12 @@ for i = 1:10
   else
     test(i).v0 = 0;
   end;
+
   x = test(i).time;
   y = test(i).data;
 
-  x(1) = []; %had a divide by zero error
-  y(1) = []; %to line up both vectors
-
-  x = x(1:500); %linearize only the first 500 values
-  y = y(1:500); %linearize only the first 500 values
-
-  y = x ./ y; %linearize the product data
+  x = x(1:20); %linearize only the first 250 values
+  y = y(1:20); %linearize only the first 250 values
 
   %find line best fit
   xline = mean(x);
@@ -103,15 +99,13 @@ for i = 1:10
   b = yline - a * xline;
   %done with best fit
 
-  a = 1 / a;
-  b = b * a;
-
   %make dataset off of modeled line
-  xDataPoints = 1:500;
-  yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
+  xDataPoints = 1:10;
+  yDataPoints = a * xDataPoints + b;
 
   %use line to find initial velocity
   test(i).v0(1) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
+  disp((yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1)));
 
   if sizeOfData(2) == 20
     %add it to the Michaelis-Menten dataset
@@ -122,13 +116,13 @@ for i = 1:10
     x = test(i).dupTime;
     y = test(i).dupData;
 
-    x(1) = []; %had a divide by zero error
-    y(1) = []; %to line up both vectors
+    % x(1) = []; %had a divide by zero error
+    % y(1) = []; %to line up both vectors
 
-    x = x(1:500); %linearize only the first 500 values
-    y = y(1:500); %linearize only the first 500 values
+    x = x(1:20); %linearize only the first 500 values
+    y = y(1:20); %linearize only the first 500 values
 
-    y = x ./ y; %linearize the product data
+    % y = x ./ y; %linearize the product data
 
 
     %find the line best fit
@@ -139,11 +133,11 @@ for i = 1:10
     a = (xline * yline - xyline) / (xline ^ 2 - mean(x .^ 2));
     b = yline - a * xline;
 
-    a = 1 / a;
-    b = b * a;
+    % a = 1 / a;
+    % b = b * a;
 
     %use the model to make a dataset
-    xDataPoints = 1:500;
+    xDataPoints = 1:20;
     yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
 
     %use data set to find the inital velocity
@@ -155,7 +149,7 @@ for i = 1:10
   else
     mmData(i, 1) = test(i).concentration;
     mmData(i, 2) = test(i).v0;
-    mmData(11:end, 1:2) = [];
+    mmData(11:end, :) = [];
   end;
 end;
 
@@ -165,7 +159,6 @@ end;
 
 data(:, 1) = mmData(:,1);
 data(:, 2) = mmData(:, 1) ./ mmData(:, 2);
-
 %data = rmoutliers(data);
 
 Y = mmData(:, 1) ./ mmData(:, 2);

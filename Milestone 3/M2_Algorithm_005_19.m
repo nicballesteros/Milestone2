@@ -1,4 +1,4 @@
-function [Km,Vmax] = project_function(time, enzymeData);
+function [Km,Vmax, v0] = project_function(time, enzymeData);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description
@@ -105,7 +105,6 @@ for i = 1:10
 
   %use line to find initial velocity
   test(i).v0(1) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
-  disp((yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1)));
 
   if sizeOfData(2) == 20
     %add it to the Michaelis-Menten dataset
@@ -152,6 +151,8 @@ for i = 1:10
     mmData(11:end, :) = [];
   end;
 end;
+
+v0 = mmData(:, 2);
 
 %--------------------------------------
 %implementing Hanes-Woolf Linearization
@@ -209,8 +210,12 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT
+
 fprintf("Vmax: %.3f\n", Vmax);
 fprintf("Km: %.3f\n", Km);
+fprintf("V0 Values: \n");
+disp(v0);
+
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

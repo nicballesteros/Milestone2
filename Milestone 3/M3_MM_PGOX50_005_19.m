@@ -7,19 +7,17 @@
 %calculations.
 %
 % Function Call
-%function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
+%   M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
 %
 % Input Arguments
-%
-% Substrate_data: input the enzyme test substrate data
-% V_initials: input a vector of V0 values calculated from the orginial
-% substrate data
-% Vmax: Input the calculated approximation of Vmax
-% Km: Input the calculated approximation of Km
+%   Substrate_data: input the enzyme test substrate data
+%   V_initials: input a vector of V0 values calculated from the orginial
+%     substrate data
+%   Vmax: Input the calculated approximation of Vmax
+%   Km: Input the calculated approximation of Km
 %
 % Output Arguments
-%
-% SSEdata: Outputs the error presented within previous calculations
+%   SSEdata: Outputs the error presented within previous calculations
 %
 % Assignment Information
 %   Assignment:     M03, Part 2
@@ -36,6 +34,12 @@
 %% INITIALIZATION
 
 csvData = readmatrix('Data_PGOX50_enzyme.csv');
+
+enzymeData = csvData(:, 2:11);
+
+enzymeData(1, :) = [];
+enzymeData(3:4, :) = [];
+
 Substrate_data = csvData(5:end, :);
 
 time = Substrate_data(:,1);
@@ -126,10 +130,22 @@ michaelisMentenModel(:, 2) = (x * Vmax) ./ (Km + x); % make the y values
 x = concentration.value;
 predictedValues = (x * Vmax) ./ (Km + x); %predict the values
 
-disp(concentration.v0);
-disp(predictedValues);
+% disp(concentration.v0);
+% disp(predictedValues);
 
 SSE = sum((concentration.v0 - predictedValues) .^ 2);
+
+% calling team 19's algorithm
+[AlgoKm, AlgoVmax] = M2_Algorithm_005_19(time, enzymeData);
+
+AlgorithmModel = zeros(1, 10);
+
+for i = 1:10
+  x = concentration.value(i);
+  AlgorithmModel(i) = (AlgoVmax * x) ./ (AlgoKm + x);
+end;
+
+AlgoSSE = sum((concentration.v0 - AlgorithmModel) .^ 2);
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
@@ -257,7 +273,10 @@ plot(michaelisMentenModel(:, 1), michaelisMentenModel(:, 2));
 %% ____________________
 %% COMMAND WINDOW OUTPUT
 
-fprintf("Inherited Error: %0.2f", SSE);
+fprintf("Inherited Error: %0.5f\n", SSE);
+
+fprintf("Error from Algo: %0.5f\n", AlgoSSE);
+fprintf("Total Error: %0.5f\n", AlgoSSE - SSE);
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

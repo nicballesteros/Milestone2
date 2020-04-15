@@ -1,4 +1,4 @@
-function [Km,Vmax] = project_function(time, enzymeData);
+function [Km,Vmax,V0] = M2_Algorithm_005_19(time, enzymeData);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description
@@ -6,7 +6,7 @@ function [Km,Vmax] = project_function(time, enzymeData);
 % a given enzyme's data.
 %
 % Function Call
-%   [Km, Vmax] = project_function(time, substate_data);
+%   function [Km,Vmax,V0] = M2_Algorithm_005_19(time, enzymeData);
 %
 % Input Arguments
 %   time: the time variable for each given data set.
@@ -128,6 +128,7 @@ for i = 1:10
 
   %use data set to find the inital velocity
   test(i).v0(2) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
+  V0 = test(i).v0(2)
 
   %add the inital velocity to the Michaelis-Menten dataset
   mmData(2 * i, 1) = test(i).concentation;

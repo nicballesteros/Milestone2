@@ -74,7 +74,6 @@ concentration.value(9) = 1000;
 concentration.value(10) = 2000;
 
 
-% V_initials = [0.028, 0.055, 0.11, 0.19,0.338, 0.613, 0.917, 1.201, 1.282, 1.57];
 Km = 214.28;
 Vmax = 1.61;
 

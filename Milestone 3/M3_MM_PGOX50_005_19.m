@@ -40,20 +40,20 @@ enzymeData = enzymeData(:, 2:11);
 enzymeData(1, :) = [];
 enzymeData(3:4, :) = [];
 
-Substrate_data = csvData(5:end, :);
+% Substrate_data = csvData(5:end, :);
 
-time = Substrate_data(:,1);
+time = enzymeData(:,1);
 
-concentration.data(:, 1) = Substrate_data(:, 2); %3.75
-concentration.data(:, 2) = Substrate_data(:, 3); %7.5
-concentration.data(:, 3) = Substrate_data(:, 4); %15
-concentration.data(:, 4) = Substrate_data(:, 5); %30
-concentration.data(:, 5) = Substrate_data(:, 6); %65
-concentration.data(:, 6) = Substrate_data(:, 7); %125
-concentration.data(:, 7) = Substrate_data(:, 8); %250
-concentration.data(:, 8) = Substrate_data(:, 9); %500
-concentration.data(:, 9) = Substrate_data(:, 10);%1000
-concentration.data(:, 10) = Substrate_data(:, 11);%2000
+concentration.data(:, 1) = enzymeData(:, 2); %3.75
+concentration.data(:, 2) = enzymeData(:, 3); %7.5
+concentration.data(:, 3) = enzymeData(:, 4); %15
+concentration.data(:, 4) = enzymeData(:, 5); %30
+concentration.data(:, 5) = enzymeData(:, 6); %65
+concentration.data(:, 6) = enzymeData(:, 7); %125
+concentration.data(:, 7) = enzymeData(:, 8); %250
+concentration.data(:, 8) = enzymeData(:, 9); %500
+concentration.data(:, 9) = enzymeData(:, 10);%1000
+concentration.data(:, 10) = enzymeData(:, 11);%2000
 
 for 1:10
   concentration.v0(i) = V_initials(i);

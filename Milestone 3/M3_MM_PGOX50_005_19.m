@@ -1,4 +1,4 @@
-% function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
+function [SSEdata] = M3_MMPGOX50_005_19(enzymeData,V_initials,Vmax,Km)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description
@@ -7,19 +7,17 @@
 %calculations.
 %
 % Function Call
-%function [SSEdata] = M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
+%   M3_MMPGOX50_005_19(Substrate_data,V_initials,Vmax,Km)
 %
 % Input Arguments
-%
-% Substrate_data: input the enzyme test substrate data
-% V_initials: input a vector of V0 values calculated from the orginial
-% substrate data
-% Vmax: Input the calculated approximation of Vmax
-% Km: Input the calculated approximation of Km
+%   enzymeData: input the enzyme test substrate data. Data raw from csv
+%   V_initials: input a vector of V0 values calculated from the orginial
+%     substrate data
+%   Vmax: Input the calculated approximation of Vmax
+%   Km: Input the calculated approximation of Km
 %
 % Output Arguments
-%
-% SSEdata: Outputs the error presented within previous calculations
+%   SSEdata: Outputs the error presented within previous calculations
 %
 % Assignment Information
 %   Assignment:     M03, Part 2
@@ -35,32 +33,42 @@
 %% ____________________
 %% INITIALIZATION
 
-csvData = readmatrix('Data_PGOX50_enzyme.csv');
-Substrate_data = csvData(5:end, :);
+% csvData = readmatrix('Data_PGOX50_enzyme.csv');
 
-time = Substrate_data(:,1);
+enzymeData = enzymeData(:, 2:11);
 
-concentration.data(:, 1) = Substrate_data(:, 2); %3.75
-concentration.data(:, 2) = Substrate_data(:, 3); %7.5
-concentration.data(:, 3) = Substrate_data(:, 4); %15
-concentration.data(:, 4) = Substrate_data(:, 5); %30
-concentration.data(:, 5) = Substrate_data(:, 6); %65
-concentration.data(:, 6) = Substrate_data(:, 7); %125
-concentration.data(:, 7) = Substrate_data(:, 8); %250
-concentration.data(:, 8) = Substrate_data(:, 9); %500
-concentration.data(:, 9) = Substrate_data(:, 10);%1000
-concentration.data(:, 10) = Substrate_data(:, 11);%2000
+enzymeData(1, :) = [];
+enzymeData(3:4, :) = [];
 
-concentration.v0(1) = 0.028;
-concentration.v0(2) = 0.055;
-concentration.v0(3) = 0.11;
-concentration.v0(4) = 0.19;
-concentration.v0(5) = 0.338;
-concentration.v0(6) = 0.613;
-concentration.v0(7) = 0.917;
-concentration.v0(8) = 1.201;
-concentration.v0(9) = 1.282;
-concentration.v0(10) = 1.57;
+% Substrate_data = csvData(5:end, :);
+
+time = enzymeData(:,1);
+
+concentration.data(:, 1) = enzymeData(:, 2); %3.75
+concentration.data(:, 2) = enzymeData(:, 3); %7.5
+concentration.data(:, 3) = enzymeData(:, 4); %15
+concentration.data(:, 4) = enzymeData(:, 5); %30
+concentration.data(:, 5) = enzymeData(:, 6); %65
+concentration.data(:, 6) = enzymeData(:, 7); %125
+concentration.data(:, 7) = enzymeData(:, 8); %250
+concentration.data(:, 8) = enzymeData(:, 9); %500
+concentration.data(:, 9) = enzymeData(:, 10);%1000
+concentration.data(:, 10) = enzymeData(:, 11);%2000
+
+for 1:10
+  concentration.v0(i) = V_initials(i);
+end;
+
+% concentration.v0(1) = 0.028;
+% concentration.v0(2) = 0.055;
+% concentration.v0(3) = 0.11;
+% concentration.v0(4) = 0.19;
+% concentration.v0(5) = 0.338;
+% concentration.v0(6) = 0.613;
+% concentration.v0(7) = 0.917;
+% concentration.v0(8) = 1.201;
+% concentration.v0(9) = 1.282;
+% concentration.v0(10) = 1.57;
 
 concentration.value(1) = 3.75;
 concentration.value(2) = 7.5;
@@ -73,9 +81,16 @@ concentration.value(8) = 500;
 concentration.value(9) = 1000;
 concentration.value(10) = 2000;
 
+<<<<<<< HEAD
 
 Km = 214.28;
 Vmax = 1.61;
+=======
+% for testing
+% V_initials = [0.028, 0.055, 0.11, 0.19,0.338, 0.613, 0.917, 1.201, 1.282, 1.57];
+% Km = 214.28;
+% Vmax = 1.61;
+>>>>>>> master
 
 %% ____________________
 %% CALCULATIONS
@@ -125,10 +140,22 @@ michaelisMentenModel(:, 2) = (x * Vmax) ./ (Km + x); % make the y values
 x = concentration.value;
 predictedValues = (x * Vmax) ./ (Km + x); %predict the values
 
-disp(concentration.v0);
-disp(predictedValues);
+% disp(concentration.v0);
+% disp(predictedValues);
 
-SSE = sum((concentration.v0 - predictedValues) .^ 2);
+SSEdata = sum((concentration.v0 - predictedValues) .^ 2);
+
+% calling team 19's algorithm
+[AlgoKm, AlgoVmax] = M2_Algorithm_005_19(time, enzymeData);
+
+AlgorithmModel = zeros(1, 10);
+
+for i = 1:10
+  x = concentration.value(i);
+  AlgorithmModel(i) = (AlgoVmax * x) ./ (AlgoKm + x);
+end;
+
+AlgoSSE = sum((concentration.v0 - AlgorithmModel) .^ 2);
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
@@ -256,7 +283,9 @@ plot(michaelisMentenModel(:, 1), michaelisMentenModel(:, 2));
 %% ____________________
 %% COMMAND WINDOW OUTPUT
 
-fprintf("Inherited Error: %0.2f", SSE);
+fprintf("Inherited Error: %0.5f\n", SSEdata);
+fprintf("Error from Algo: %0.5f\n", AlgoSSE);
+fprintf("Total Error: %0.5f\n", AlgoSSE - SSEdata);
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

@@ -18,7 +18,11 @@
 %% INITIALIZATION
 
 % %Importing the data
+<<<<<<< HEAD
 product_data = readmatrix('Data_nextGen_KEtesting_allresults.csv'); %All five of the enzymes substrate data with two trials
+=======
+product_data = readmatrix('../Data_nextGen_KEtesting_allresults.csv'); %All five of the enzymes substrate data with two trials
+>>>>>>> master
 
 product_data(2,:) = []; % gets rid of the column headers
 
@@ -29,9 +33,15 @@ end;
 time = product_data(:,1); %Times for each of the substrates transformations
 time(1) = []; %get rid of the text above the time col
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:Milestone 3/main_function.m
 for i = 1:5
   project_function(time, enzyme(i).data);
 end
+========
+>>>>>>>> master:main_function.m
+=======
+>>>>>>> master
 enzyme_parameters = zeros(5, 2); %data for each enzyme storing Vmax and Km
 %the first col will be Km and the second column will be Vmax
 
@@ -39,5 +49,13 @@ enzyme_parameters = zeros(5, 2); %data for each enzyme storing Vmax and Km
 %% CALCULATIONS
 
 for i = 1:5
+<<<<<<< HEAD
+<<<<<<<< HEAD:Milestone 3/main_function.m
   enzyme_parameters(i,:) = project_function(time, enzyme(i).data);
+========
+  enzyme_parameters(i,:) = M2_Algorithm_005_19(time, enzyme(i).data);
+>>>>>>>> master:main_function.m
+=======
+  enzyme_parameters(i,:) = M3_Algorithm_005_19(time, enzyme(i).data);
+>>>>>>> master
 end;

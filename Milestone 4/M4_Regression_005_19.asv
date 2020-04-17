@@ -13,7 +13,7 @@
 %
 % Output Arguments
 %
-% Enzyme_price: Outputs the estimated price for the enzyme, ($/lb)
+% Price: Outputs the estimated price for the enzyme, ($/lb)
 %
 % Assignment Information
 %   Assignment:     M04, Problem 3
@@ -49,8 +49,8 @@ Price_trans = polyval(Coefficients_Data,Michaelis_Constant); %Determines the tra
 Data_slope = LinData_slope; %Determines the slope of the model equation
 Data_intercept = exp(LinData_intercept); %Determines the intercept of the model equation
 
-% %Creating the model values to graph against the given data
-% Model_Price = Data_intercept.*(exp(Data_slope.*Michaelis_Constant)); % Creates an array of Model Price values
+%Creating the model values to graph against the given data
+Model_Price = Data_intercept.*(exp(Data_slope.*Michaelis_Constant)); % Creates an array of Model Price values
 
 %Determining the price of an enzyme
 Enzyme_price = Data_intercept.*exp(Data_slope.*Km); %Determines the price for a specific enzyme

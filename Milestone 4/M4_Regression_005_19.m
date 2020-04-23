@@ -1,8 +1,9 @@
-%function [Enzyme_price] = M4_Regression_005_19(Km)
+function [Enzyme_price] = M4_Regression_005_19(Km)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description 
-%replace this text with your program decription as a comment
+% This function predicts the price of an enzyme based on its Michealis
+% Constant, or the speed of the enzyme.
 %
 % Function Call
 %function [Enzyme_price] = M4_Regression_005_19(Km)
@@ -45,7 +46,7 @@ LogPrice = log(Price); %Determines the log base 10 of price values (log($/lb))
 Coefficients_Data = polyfit(Michaelis_Constant,LogPrice,1); %Determines the coefficients for the linearized data
 LinData_slope = Coefficients_Data(1); %Determines the slope of the linearized
 LinData_intercept = Coefficients_Data(2); %Determines the intercept of the linearized data
-Price_trans = polyval(Coefficients_Data,Michaelis_Constant); %Determines the transposed price values for the linear equation
+%Price_trans = polyval(Coefficients_Data,Michaelis_Constant); %Determines the transposed price values for the linear equation
 Data_slope = LinData_slope; %Determines the slope of the model equation
 Data_intercept = exp(LinData_intercept); %Determines the intercept of the model equation
 
@@ -54,6 +55,7 @@ Data_intercept = exp(LinData_intercept); %Determines the intercept of the model 
 
 %Determining the price of an enzyme
 Enzyme_price = Data_intercept.*exp(Data_slope.*Km); %Determines the price for a specific enzyme
+
 
 % %Calculation of Least Square Regression Parameters
 % SSE = sum((LogPrice-Price_trans).^2); %Determines the Sum of Squared errors for the Linear Model

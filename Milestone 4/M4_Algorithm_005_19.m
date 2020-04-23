@@ -3,7 +3,13 @@ function [Km,Vmax, v0] = project_function(time, enzymeData);
 % ENGR 132
 % Program Description
 %   This program estimates the Michaelis-Menten parameters, Km and Vmax, for
-% a given enzyme's data.
+% a given enzyme's data. It first finds the starting velocity V0 for all the
+% tests at different concentrations for a single enzyme. Then these Velocities
+% are run through two different linearization methods. One is Hanes-Woolf and
+% the other is Eadie-Hofstee. In both instances, the line must meet a minimum
+% coefficient of determination in order to pass and find the general model. The
+% two linearizations are compared and the curve with less sum of squared error
+% value is chosen to display as the final Km and Vmax values.
 %
 % Function Call
 %   [Km, Vmax] = project_function(time, substate_data);
@@ -108,7 +114,7 @@ for i = 1:10
 
   if sizeOfData(2) == 20
     %add it to the Michaelis-Menten dataset
-    mmData(2 * i - 1, 1) = test(i).concentation;
+    mmData(2 * i - 1, 1) = test(i).concentration;
     mmData(2 * i - 1, 2) = test(i).v0(1);
 
     %do the same thing as above but for the duplicate data
@@ -118,8 +124,8 @@ for i = 1:10
     % x(1) = []; %had a divide by zero error
     % y(1) = []; %to line up both vectors
 
-    x = x(1:20); %linearize only the first 500 values
-    y = y(1:20); %linearize only the first 500 values
+    x = x(1:20); %linearize only the first 20 values
+    y = y(1:20); %linearize only the first 20 values
 
     % y = x ./ y; %linearize the product data
 
@@ -137,13 +143,13 @@ for i = 1:10
 
     %use the model to make a dataset
     xDataPoints = 1:20;
-    yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
+    yDataPoints = a * xDataPoints + b;
 
     %use data set to find the inital velocity
     test(i).v0(2) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
 
     %add the inital velocity to the Michaelis-Menten dataset
-    mmData(2 * i, 1) = test(i).concentation;
+    mmData(2 * i, 1) = test(i).concentration;
     mmData(2 * i, 2) = test(i).v0(2);
   else
     mmData(i, 1) = test(i).concentration;
@@ -154,34 +160,115 @@ end;
 
 v0 = mmData(:, 2);
 
+data = mmData; %keep a copy of the raw data
+% mmData is going to be spliced and all the outliers are going to be removed.
+
 %--------------------------------------
 %implementing Hanes-Woolf Linearization
 %--------------------------------------
 
-data(:, 1) = mmData(:,1);
-data(:, 2) = mmData(:, 1) ./ mmData(:, 2);
-%data = rmoutliers(data);
+while 1
+  Y = mmData(:, 1) ./ mmData(:, 2);
+  X = mmData(:, 1);
 
-Y = mmData(:, 1) ./ mmData(:, 2);
-X = mmData(:, 1);
+  Xline = mean(X);
+  Yline = mean(Y);
+  XYline = mean(X .* Y);
 
-Xline = mean(X);
-Yline = mean(Y);
-XYline = mean(X .* Y);
+  a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
+  b = Yline - a * Xline;
 
-a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(X .^ 2));
-b = Yline - a * Xline;
+  fx = X * a + b; %Hanes-Woolf Line
 
-fx = X * a + b; %Hanes-Woolf Line
+  HanesSSE = sum((Y-fx) .^ 2);
+  HanesSST = sum((Y-Yline) .^ 2);
+  HanesR2 = 1 - HanesSSE/HanesSST;
+  % fprintf("HanesR2: %.4f\n", HanesR2);
 
-Vmax = 1 / a; %calculate Vmax from Hanes-Woolf
-Km = b * Vmax; %calculate Km from Hanes-Woolf
+  if HanesR2 > 0.997
+    break; %get out of the infinite while loop
+  else
+    %get rid of outliers
+    maxDiff = max(abs(fx-Y));
+    for i = 1:length(mmData)
+      if abs(Y(i) - fx(i)) == maxDiff
+        mmData(i,:) = [];
+      end;
+    end;
+  end;
+end;
+
+hanesVmax = 1 / a; %calculate Vmax from Hanes-Woolf
+hanesKm = b * hanesVmax; %calculate Km from Hanes-Woolf
+
+hanesFx = data(:, 1) .* hanesVmax ./ (hanesKm + data(:, 1));
+
+hanesMMSSE = sum((data(:,2) - hanesFx) .^ 2);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Eadie-Hofstee Linearization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mmData = data; %reset mmData cause it is currently missing data
+
+while 1
+  XE = mmData(:,2) ./ mmData(:, 1);
+  YE = mmData(:, 2);
+
+  Xline = mean(XE);
+  Yline = mean(YE);
+  XYline = mean(XE .* YE);
+
+  a = (Xline * Yline - XYline) / (Xline ^ 2 - mean(XE .^ 2));
+  b = Yline - a * Xline;
+
+  fxE = XE * a + b; %lineweaver-Eadie line
+
+  EadieSSE = sum((YE-fxE) .^ 2);
+  EadieSST = sum((YE-Yline) .^ 2);
+  EadieR2 = 1 - EadieSSE/EadieSST;
+  % fprintf("EadieR2: %.4f\n", EadieR2);
+
+  if EadieR2 > 0.990
+    break; %get out of the infinite while loop
+  else
+    %get rid of outliers
+    maxDiff = max(abs(fxE-YE));
+    for i = 1:length(mmData)
+      if abs(YE(i) - fxE(i)) == maxDiff
+        mmData(i,:) = [];
+      end;
+    end;
+  end;
+end;
+
+EadieVmax = b; %calculate Vmax from Lineweaver-Eadie
+EadieKm = -1 * a; %calculate Km from Lineweaver-Eadie
+
+EadieFx = data(:, 1) .* EadieVmax ./ (EadieKm + data(:, 1));
+
+EadieMMSSE = sum((data(:,2) - EadieFx) .^ 2);
+
+
+hanes = false;
+eadie = false;
+
+if hanesMMSSE < EadieMMSSE
+  Vmax = hanesVmax;
+  Km = hanesKm;
+  hanes = true;
+else
+  Vmax = EadieVmax;
+  Km = EadieKm;
+end;
 
 % make a dataset that follows the model
 numberOfDataPoints = 100;
 seperation = (2000 - 3.75) / numberOfDataPoints;
 xmodel = 3.75:seperation:2000;
 MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
+
+mmData = data;
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
@@ -190,7 +277,7 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 %Velocities
  figure;
  subplot(2,1,1);
- plot(mmData(:,1), mmData(:, 2), 'ko'); %Calculated Reaction Velocities
+ plot(data(:,1), data(:, 2), 'ko'); %Calculated Reaction Velocities
  title('Reaction Velocity as Initial [S] changes');
  xlabel('Initial Substrate Concentration [S] (uM)');
  ylabel('Reaction Velocity (uM/s)');
@@ -198,6 +285,7 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
  plot(xmodel, MichaelisModel, 'r--'); %Michealis Model curve
  legend('Calculated Reaction Velocities','Michaelis Model','location','best');
 
+if hanes
  subplot(2,1,2);
  plot(X,Y, 'ro');
  hold on;
@@ -206,17 +294,44 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
  ylabel('Velocity / [S]');
  title('Hanes-Woolf Linearization');
  legend('Linarized Velocity Data', 'Best Fit Line', 'location', 'best');
-
+else
+  subplot(2,1,2);
+  plot(XE,YE, 'ro');
+  hold on;
+  plot(XE, fxE, 'b-');
+  xlabel('V/[S] (u(s^-1))');
+  ylabel('Velocity (uM(s^-1))');
+  title('Eadie-Hofstee Linearization');
+  legend('Linarized Velocity Data', 'Best Fit Line', 'location', 'best');
+end;
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT
 
-fprintf("Vmax: %.3f\n", Vmax);
-fprintf("Km: %.3f\n", Km);
-fprintf("V0 Values: \n");
+fprintf("!!!!!!!!Enzyme Calculations!!!!!!!\n");
+fprintf("--------V0 Values--------\n");
 disp(v0);
 
+fprintf("--------Hanes-Woolf Parameters--------\n");
 
+fprintf("Hanes Vmax: %.4f\n", hanesVmax);
+fprintf("Hanes Km: %.4f\n", hanesKm);
+
+fprintf("--------Eadie-Hofstee Parameters--------\n");
+
+fprintf("Eadie Vmax: %.4f\n", EadieVmax);
+fprintf("Eadie Km: %.4f\n", EadieKm);
+
+fprintf("--------Compare SSE Values--------\n")
+
+fprintf("SSE of MM plot from Eadie Linearization: %.4f\n", EadieMMSSE);
+
+fprintf("SSE of MM plot from Hanes Linearization: %.4f\n", hanesMMSSE);
+
+fprintf("--------Final Values--------\n");
+fprintf("Vmax: %.3f\n", Vmax);
+fprintf("Km: %.3f\n", Km);
+fprintf("\n\n\n\n");
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT
 % We have not used source code obtained from any other unauthorized

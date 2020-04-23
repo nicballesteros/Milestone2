@@ -256,10 +256,12 @@ eadie = false;
 if hanesMMSSE < EadieMMSSE
   Vmax = hanesVmax;
   Km = hanesKm;
+  SSE = HanesSSE;
   hanes = true;
 else
   Vmax = EadieVmax;
   Km = EadieKm;
+  SSE = EadieSSE;
 end;
 
 % make a dataset that follows the model
@@ -331,6 +333,7 @@ fprintf("SSE of MM plot from Hanes Linearization: %.4f\n", hanesMMSSE);
 fprintf("--------Final Values--------\n");
 fprintf("Vmax: %.3f\n", Vmax);
 fprintf("Km: %.3f\n", Km);
+fprintf("SSE: %.3f\n", SSE);
 fprintf("\n\n\n\n");
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

@@ -110,7 +110,7 @@ for i = 1:10
 
   if sizeOfData(2) == 20
     %add it to the Michaelis-Menten dataset
-    mmData(2 * i - 1, 1) = test(i).concentation;
+    mmData(2 * i - 1, 1) = test(i).concentration;
     mmData(2 * i - 1, 2) = test(i).v0(1);
 
     %do the same thing as above but for the duplicate data
@@ -139,13 +139,13 @@ for i = 1:10
 
     %use the model to make a dataset
     xDataPoints = 1:20;
-    yDataPoints = (a * xDataPoints) ./ (b + xDataPoints);
+    yDataPoints = a * xDataPoints + b;
 
     %use data set to find the inital velocity
     test(i).v0(2) = (yDataPoints(2) - yDataPoints(1)) / (xDataPoints(2) - xDataPoints(1));
 
     %add the inital velocity to the Michaelis-Menten dataset
-    mmData(2 * i, 1) = test(i).concentation;
+    mmData(2 * i, 1) = test(i).concentration;
     mmData(2 * i, 2) = test(i).v0(2);
   else
     mmData(i, 1) = test(i).concentration;
@@ -185,6 +185,10 @@ seperation = (2000 - 3.75) / numberOfDataPoints;
 xmodel = 3.75:seperation:2000;
 MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 
+MMFX = (mmData(:,1) * Vmax) ./ (Km + mmData(:, 1));
+
+SSE = sum((MMFX - mmData(:,2)) .^ 2);
+
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
@@ -215,6 +219,7 @@ MichaelisModel = Vmax * xmodel ./ (Km + xmodel);
 
 fprintf("Vmax: %.3f\n", Vmax);
 fprintf("Km: %.3f\n", Km);
+fprintf("SSE: %.4f\n", SSE);
 fprintf("V0 Values: \n");
 disp(v0);
 

@@ -256,12 +256,12 @@ eadie = false;
 if hanesMMSSE < EadieMMSSE
   Vmax = hanesVmax;
   Km = hanesKm;
-  SSE = HanesSSE;
+  SSE = HanesMMSSE;
   hanes = true;
 else
   Vmax = EadieVmax;
   Km = EadieKm;
-  SSE = EadieSSE;
+  SSE = EadieMMSSE;
 end;
 
 % make a dataset that follows the model

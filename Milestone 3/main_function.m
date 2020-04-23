@@ -36,5 +36,5 @@ enzyme_parameters = zeros(5, 2); %data for each enzyme storing Vmax and Km
 %% CALCULATIONS
 
 for i = 1:5
-  enzyme_parameters(i,:) = M2_Algorithm_005_19(time, enzyme(i).data);
+  enzyme_parameters(i,:) = M3_Algorithm_005_19(time, enzyme(i).data);
 end;

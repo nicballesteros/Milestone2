@@ -1,12 +1,12 @@
-function [Km,Vmax, v0] = project_function(time, enzymeData);
+function [Km,Vmax, v0] = M3_Algorithm_005_19(time, enzymeData);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132
 % Program Description
-%   This program estimates the Michaelis-Menten parameters, Km and Vmax, for
+%   This program estimates the Michaelis-Menten parameters, V0, Km and Vmax, for
 % a given enzyme's data.
 %
 % Function Call
-%   [Km, Vmax] = project_function(time, substate_data);
+%   function [Km,Vmax, v0] = M3_Algorithm_005_19(time, enzymeData);
 %
 % Input Arguments
 %   time: the time variable for each given data set.
@@ -17,6 +17,8 @@ function [Km,Vmax, v0] = project_function(time, enzymeData);
 % Output Arguments
 %   Km: Outputs the estimated Km value for the enzyme
 %   Vmax: Outputs the estimated Vmax value for the enzyme
+%   v0: Outputs the calculated v0 values for each given initial substrate
+%   concentration.
 %
 % Assignment Information
 %   Assignment:     M02, Problem 1

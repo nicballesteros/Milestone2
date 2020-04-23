@@ -198,12 +198,14 @@ while 1
   end;
 end;
 
+hanesMM = mmData;
+
 hanesVmax = 1 / a; %calculate Vmax from Hanes-Woolf
 hanesKm = b * hanesVmax; %calculate Km from Hanes-Woolf
 
-hanesFx = data(:, 1) .* hanesVmax ./ (hanesKm + data(:, 1));
+hanesFx = hanesMM(:, 1) .* hanesVmax ./ (hanesKm + hanesMM(:, 1));
 
-hanesMMSSE = sum((data(:,2) - hanesFx) .^ 2);
+hanesMMSSE = sum((hanesMM(:,2) - hanesFx) .^ 2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Eadie-Hofstee Linearization
@@ -242,12 +244,14 @@ while 1
   end;
 end;
 
+eadieMM = mmData;
+
 EadieVmax = b; %calculate Vmax from Lineweaver-Eadie
 EadieKm = -1 * a; %calculate Km from Lineweaver-Eadie
 
-EadieFx = data(:, 1) .* EadieVmax ./ (EadieKm + data(:, 1));
+EadieFx = eadieMM(:, 1) .* EadieVmax ./ (EadieKm + eadieMM(:, 1));
 
-EadieMMSSE = sum((data(:,2) - EadieFx) .^ 2);
+EadieMMSSE = sum((eadieMM(:,2) - EadieFx) .^ 2);
 
 
 hanes = false;
@@ -256,7 +260,7 @@ eadie = false;
 if hanesMMSSE < EadieMMSSE
   Vmax = hanesVmax;
   Km = hanesKm;
-  SSE = HanesMMSSE;
+  SSE = hanesMMSSE;
   hanes = true;
 else
   Vmax = EadieVmax;
@@ -277,9 +281,10 @@ mmData = data;
 
 %Plots the Calculated Reaction Velocities against the Model Reaction
 %Velocities
+if hanes
  figure;
  subplot(2,1,1);
- plot(data(:,1), data(:, 2), 'ko'); %Calculated Reaction Velocities
+ plot(hanesMM(:,1), hanesMM(:, 2), 'ko'); %Calculated Reaction Velocities
  title('Reaction Velocity as Initial [S] changes');
  xlabel('Initial Substrate Concentration [S] (uM)');
  ylabel('Reaction Velocity (uM/s)');
@@ -287,7 +292,6 @@ mmData = data;
  plot(xmodel, MichaelisModel, 'r--'); %Michealis Model curve
  legend('Calculated Reaction Velocities','Michaelis Model','location','best');
 
-if hanes
  subplot(2,1,2);
  plot(X,Y, 'ro');
  hold on;
@@ -297,6 +301,16 @@ if hanes
  title('Hanes-Woolf Linearization');
  legend('Linarized Velocity Data', 'Best Fit Line', 'location', 'best');
 else
+  figure;
+  subplot(2,1,1);
+  plot(eadieMM(:,1), eadieMM(:, 2), 'ko'); %Calculated Reaction Velocities
+  title('Reaction Velocity as Initial [S] changes');
+  xlabel('Initial Substrate Concentration [S] (uM)');
+  ylabel('Reaction Velocity (uM/s)');
+  hold on;
+  plot(xmodel, MichaelisModel, 'r--'); %Michealis Model curve
+  legend('Calculated Reaction Velocities','Michaelis Model','location','best');
+
   subplot(2,1,2);
   plot(XE,YE, 'ro');
   hold on;
@@ -312,7 +326,11 @@ end;
 
 fprintf("!!!!!!!!Enzyme Calculations!!!!!!!\n");
 fprintf("--------V0 Values--------\n");
-disp(v0);
+if hanes
+  disp(hanesMM);
+else
+  disp(eadieMM);
+end;
 
 fprintf("--------Hanes-Woolf Parameters--------\n");
 
@@ -333,7 +351,7 @@ fprintf("SSE of MM plot from Hanes Linearization: %.4f\n", hanesMMSSE);
 fprintf("--------Final Values--------\n");
 fprintf("Vmax: %.3f\n", Vmax);
 fprintf("Km: %.3f\n", Km);
-fprintf("SSE: %.3f\n", SSE);
+fprintf("SSE: %.4f\n", SSE);
 fprintf("\n\n\n\n");
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

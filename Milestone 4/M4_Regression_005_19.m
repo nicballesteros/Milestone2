@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function [Enzyme_price] = M4_Regression_005_19(Km)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
@@ -25,11 +26,38 @@ function [Enzyme_price] = M4_Regression_005_19(Km)
 %   Academic Integrity:
 %     [x] We worked with one or more peers but our collaboration
 %        maintained academic integrity.
+=======
+replace this text with your function definition line
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENGR 132 
+% Program Description 
+replace this text with your program decription as a comment
+%
+% Function Call
+replace this text with a comment that states the function call
+%
+% Input Arguments
+replace this text with a commented list of the input arguments
+%
+% Output Arguments
+replace this text with a commented list of the output arguments
+%
+% Assignment Information
+%   Assignment:     M##, Problem #
+%   Team member:    Name, login@purdue.edu [repeat for each person]
+%   Team ID:        ###-##
+%   Academic Integrity:
+%     [] We worked with one or more peers but our collaboration
+%        maintained academic integrity.
+%     Peers we worked with: Name, login@purdue [repeat for each]
+did you complete the assignment information? delete this line if yes
+>>>>>>> master
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ____________________
 %% INITIALIZATION
 
+<<<<<<< HEAD
 %Importing the data
 Price_data = readmatrix('Data_NaturalCatalysts_priceCatalog.csv'); %Imports the price data
 
@@ -37,10 +65,13 @@ Price_data = readmatrix('Data_NaturalCatalysts_priceCatalog.csv'); %Imports the 
 Michaelis_Constant = Price_data(:,1); %Creates a vector of Michaelis constants from a given data set (uM)
 Price = Price_data(:,2); %Creates a vector of prices from a given data set ($/lb)
 
+=======
+>>>>>>> master
 
 %% ____________________
 %% CALCULATIONS
 
+<<<<<<< HEAD
 %Linearizing and finding the model to the price data
 LogPrice = log(Price); %Determines the log base 10 of price values (log($/lb))
 Coefficients_Data = polyfit(Michaelis_Constant,LogPrice,1); %Determines the coefficients for the linearized data
@@ -110,6 +141,12 @@ Enzyme_price = Data_intercept.*exp(Data_slope.*Km); %Determines the price for a 
 % hold on
 % plot(Michaelis_Constant,Model_Price, 'r-')
 % legend('Price Data','Model','Location','best')
+=======
+
+%% ____________________
+%% FORMATTED TEXT/FIGURE DISPLAYS
+
+>>>>>>> master
 
 %% ____________________
 %% COMMAND WINDOW OUTPUT
